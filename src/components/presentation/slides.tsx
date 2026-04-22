@@ -5,6 +5,8 @@ import {
 } from "lucide-react";
 import hebronLogo from "@/assets/hebron-university-logo.png";
 import teleLogo from "@/assets/telemedicine-logo.png";
+import reactIcon from "@/assets/react-icon.png";
+import firebaseIcon from "@/assets/firebase-icon.png";
 
 /* ------------ Decorative shared backgrounds ------------ */
 function MedicalBackdrop() {
@@ -203,51 +205,31 @@ export function IdeaSlide() {
   );
 }
 
-/* ============================ SLIDE 4: METHODOLOGY ============================ */
+/* ============================ SLIDE 4: TECHNOLOGIES ============================ */
 export function MethodologySlide() {
   return (
     <div className="relative w-full h-full bg-gradient-soft p-8 md:p-14 overflow-y-auto">
       <MedicalBackdrop />
       <div className="relative z-10 max-w-7xl mx-auto">
-        <SectionTag icon={Code2} label="المنهجية والتقنيات" />
-        <h2 className="text-4xl md:text-5xl font-black mt-5 mb-8 animate-fade-up delay-100 text-[var(--color-deep)]">
-          منهجية العمل و<span className="text-primary">التقنيات المستخدمة</span>
+        <SectionTag icon={Code2} label="التقنيات المستخدمة" />
+        <h2 className="text-4xl md:text-5xl font-black mt-5 mb-3 animate-fade-up delay-100 text-[var(--color-deep)]">
+          البرامج و<span className="text-primary">التقنيات المستخدمة</span>
         </h2>
+        <p className="text-base md:text-lg text-muted-foreground max-w-3xl animate-fade-up delay-200 mb-8 leading-loose">
+          اعتمدنا على مجموعة من أحدث التقنيات لضمان أداء عالٍ وتجربة مستخدم متميزة.
+        </p>
 
-        {/* Methodology */}
-        <div className="card-3d bg-gradient-card glass rounded-3xl p-8 mb-8 shadow-soft animate-fade-up delay-200">
-          <div className="flex items-start gap-5">
-            <div className="w-14 h-14 shrink-0 rounded-2xl bg-gradient-hero text-white flex items-center justify-center shadow-glow">
-              <Workflow className="w-7 h-7" />
-            </div>
-            <div>
-              <h3 className="text-2xl font-bold text-[var(--color-deep)] mb-3">المنهجية: Waterfall</h3>
-              <p className="text-base md:text-lg leading-loose text-foreground/85">
-                تم اختيار منهجية <span className="font-bold text-primary">Waterfall</span> لتطوير النظام المقترح،
-                كونها تناسب المشاريع ذات المتطلبات الواضحة والمستقرة. تعتمد المنهجية على تنفيذ مراحل التطوير
-                بشكل متسلسل ومنظم، مما يضمن الوضوح والدقة ويحقق نقلة نوعية في الرعاية الطبية الافتراضية.
-              </p>
-              <div className="flex flex-wrap gap-2 mt-5">
-                {["تحليل المتطلبات", "التصميم", "التنفيذ", "الاختبار", "النشر", "الصيانة"].map((s, i) => (
-                  <div key={i} className="flex items-center gap-2">
-                    <span className="px-3 py-1.5 rounded-lg bg-primary/10 text-primary text-sm font-semibold">{s}</span>
-                    {i < 5 && <span className="text-primary/40">←</span>}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Technologies */}
         <div className="grid md:grid-cols-2 gap-6">
           {/* Frontend */}
           <div className="card-3d bg-gradient-card glass rounded-3xl p-7 shadow-soft animate-fade-up delay-300">
-            <div className="flex items-center gap-3 mb-5">
-              <div className="w-12 h-12 rounded-xl bg-[var(--color-cyan)] text-[var(--color-deep)] flex items-center justify-center">
-                <Smartphone className="w-6 h-6" />
+            <div className="flex items-center gap-4 mb-5">
+              <div className="w-16 h-16 rounded-2xl bg-white shadow-soft flex items-center justify-center p-2 ring-1 ring-[var(--color-cyan)]/40">
+                <img src={reactIcon} alt="React" className="w-full h-full object-contain" />
               </div>
-              <h3 className="text-2xl font-bold text-[var(--color-deep)]">Frontend</h3>
+              <div>
+                <p className="text-xs font-bold text-primary tracking-widest">FRONTEND</p>
+                <h3 className="text-2xl font-bold text-[var(--color-deep)]">واجهة المستخدم</h3>
+              </div>
             </div>
             <div className="space-y-2 mb-4">
               <div className="flex items-center gap-2 text-foreground/90">
@@ -269,11 +251,14 @@ export function MethodologySlide() {
 
           {/* Backend */}
           <div className="card-3d bg-gradient-card glass rounded-3xl p-7 shadow-soft animate-fade-up delay-500">
-            <div className="flex items-center gap-3 mb-5">
-              <div className="w-12 h-12 rounded-xl bg-primary text-white flex items-center justify-center">
-                <Cloud className="w-6 h-6" />
+            <div className="flex items-center gap-4 mb-5">
+              <div className="w-16 h-16 rounded-2xl bg-white shadow-soft flex items-center justify-center p-2 ring-1 ring-orange-300/50">
+                <img src={firebaseIcon} alt="Firebase" className="w-full h-full object-contain" />
               </div>
-              <h3 className="text-2xl font-bold text-[var(--color-deep)]">Backend</h3>
+              <div>
+                <p className="text-xs font-bold text-primary tracking-widest">BACKEND</p>
+                <h3 className="text-2xl font-bold text-[var(--color-deep)]">إدارة النظام</h3>
+              </div>
             </div>
             <div className="space-y-2 mb-4">
               <div className="flex items-center gap-2 text-foreground/90">
