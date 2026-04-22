@@ -7,6 +7,8 @@ import hebronLogo from "@/assets/hebron-university-logo.png";
 import teleLogo from "@/assets/telemedicine-logo.png";
 import reactIcon from "@/assets/react-icon.png";
 import firebaseIcon from "@/assets/firebase-icon.png";
+import useCaseDiagram from "@/assets/usecase-diagram.png";
+import databaseDiagram from "@/assets/database-diagram.png";
 
 /* ------------ Decorative shared backgrounds ------------ */
 function MedicalBackdrop() {
@@ -281,44 +283,35 @@ export function MethodologySlide() {
 
 /* ============================ DIAGRAM PLACEHOLDER SLIDE ============================ */
 function DiagramSlide({
-  tag, icon: Icon, title, highlight, intro, placeholderLabel, caption,
+  tag, icon: Icon, title, highlight, intro, image, imageAlt, caption,
 }: {
   tag: string; icon: any; title: string; highlight: string;
-  intro: string; placeholderLabel: string; caption?: string;
+  intro: string; image: string; imageAlt: string; caption?: string;
 }) {
   return (
-    <div className="relative w-full h-full bg-gradient-soft p-8 md:p-14 flex flex-col overflow-hidden">
+    <div className="relative w-full h-full bg-gradient-soft p-6 md:p-10 flex flex-col overflow-hidden">
       <MedicalBackdrop />
       <div className="relative z-10 max-w-7xl mx-auto w-full flex flex-col h-full">
         <SectionTag icon={Icon} label={tag} />
-        <h2 className="text-4xl md:text-5xl font-black mt-5 mb-4 animate-fade-up delay-100 text-[var(--color-deep)]">
+        <h2 className="text-3xl md:text-4xl font-black mt-3 mb-2 animate-fade-up delay-100 text-[var(--color-deep)]">
           {title} <span className="text-primary">{highlight}</span>
         </h2>
-        <p className="text-base md:text-lg text-foreground/80 max-w-4xl leading-loose animate-fade-up delay-200 mb-6">
+        <p className="text-sm md:text-base text-foreground/80 max-w-4xl leading-relaxed animate-fade-up delay-200 mb-3">
           {intro}
         </p>
 
-        <div className="flex-1 animate-fade-up delay-300">
-          <div className="card-3d relative h-full min-h-[300px] rounded-3xl border-2 border-dashed border-primary/30 bg-gradient-card glass shadow-soft flex flex-col items-center justify-center p-8 overflow-hidden">
-            {/* corner deco */}
-            <div className="absolute top-4 left-4 w-3 h-3 rounded-full bg-primary/40" />
-            <div className="absolute top-4 right-4 w-3 h-3 rounded-full bg-[var(--color-cyan)]" />
-            <div className="absolute bottom-4 left-4 w-3 h-3 rounded-full bg-[var(--color-cyan)]" />
-            <div className="absolute bottom-4 right-4 w-3 h-3 rounded-full bg-primary/40" />
-
-            <div className="w-20 h-20 rounded-2xl bg-gradient-hero flex items-center justify-center mb-5 shadow-glow">
-              <ImageIcon className="w-10 h-10 text-white" />
-            </div>
-            <p className="text-xl font-bold text-[var(--color-deep)] mb-2">{placeholderLabel}</p>
-            <p className="text-sm text-muted-foreground">أضف صورة المخطط هنا</p>
-            <code className="mt-4 text-xs px-3 py-1.5 rounded-md bg-primary/10 text-primary font-mono">
-              {`<img src="..." alt="${tag}" />`}
-            </code>
+        <div className="flex-1 min-h-0 animate-fade-up delay-300">
+          <div className="card-3d relative h-full rounded-2xl bg-white shadow-soft border border-primary/15 flex items-center justify-center p-3 overflow-hidden">
+            <div className="absolute top-3 left-3 w-2.5 h-2.5 rounded-full bg-primary/40" />
+            <div className="absolute top-3 right-3 w-2.5 h-2.5 rounded-full bg-[var(--color-cyan)]" />
+            <div className="absolute bottom-3 left-3 w-2.5 h-2.5 rounded-full bg-[var(--color-cyan)]" />
+            <div className="absolute bottom-3 right-3 w-2.5 h-2.5 rounded-full bg-primary/40" />
+            <img src={image} alt={imageAlt} className="max-w-full max-h-full object-contain" />
           </div>
         </div>
 
         {caption && (
-          <p className="text-center text-sm text-muted-foreground mt-4 italic animate-fade-up delay-500">{caption}</p>
+          <p className="text-center text-xs md:text-sm text-muted-foreground mt-3 italic animate-fade-up delay-500">{caption}</p>
         )}
       </div>
     </div>
@@ -332,8 +325,9 @@ export function UseCaseSlide() {
       icon={Users}
       title="مخطط حالات الاستخدام"
       highlight="Use Case"
-      intro="يوضح هذا المخطط كيفية تفاعل المستخدمين مع النظام، حيث يعرض الأدوار المختلفة والوظائف التي يمكن لكل مستخدم تنفيذها داخل المنصة."
-      placeholderLabel="Use Case Diagram"
+      intro="يوضح هذا المخطط كيفية تفاعل المستخدمين مع النظام، حيث يعرض الأدوار المختلفة (مريض، طبيب، مختبر، مدير النظام) والوظائف التي يمكن لكل مستخدم تنفيذها داخل المنصة."
+      image={useCaseDiagram}
+      imageAlt="Use Case Diagram"
       caption="الشكل (1): مخطط حالات الاستخدام للنظام"
     />
   );
@@ -342,13 +336,14 @@ export function UseCaseSlide() {
 export function ERDSlide() {
   return (
     <DiagramSlide
-      tag="Entity Relationship Diagram"
+      tag="Database Schema"
       icon={Database}
       title="مخطط قاعدة البيانات"
-      highlight="ERD"
-      intro="يمثل هذا المخطط البنية الداخلية لقاعدة البيانات، ويوضح الكيانات المختلفة والعلاقات بينها بطريقة منظمة تسهّل فهم تصميم النظام."
-      placeholderLabel="ERD Diagram"
-      caption="الشكل (2): مخطط الكيانات والعلاقات"
+      highlight="Database"
+      intro="يمثل هذا المخطط البنية الداخلية لقاعدة البيانات، ويوضح الجداول الرئيسية (المستخدمين، المواعيد، الوصفات، المحادثات، التقييمات...) والعلاقات بينها بطريقة منظمة تسهّل فهم تصميم النظام."
+      image={databaseDiagram}
+      imageAlt="Database Schema Diagram"
+      caption="الشكل (2): مخطط الجداول والعلاقات في قاعدة البيانات"
     />
   );
 }
