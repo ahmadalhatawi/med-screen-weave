@@ -110,9 +110,6 @@ export function CoverSlide() {
           2025 - 2026
         </p>
 
-        <p className="absolute bottom-3 text-xs text-muted-foreground/70 animate-fade-up delay-700">
-          استخدم الأسهم ← → للتنقل
-        </p>
       </div>
     </div>
   );
