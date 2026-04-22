@@ -5,6 +5,8 @@ import {
 } from "lucide-react";
 import hebronLogo from "@/assets/hebron-university-logo.png";
 import teleLogo from "@/assets/telemedicine-logo.png";
+import reactIcon from "@/assets/react-icon.png";
+import firebaseIcon from "@/assets/firebase-icon.png";
 
 /* ------------ Decorative shared backgrounds ------------ */
 function MedicalBackdrop() {
