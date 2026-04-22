@@ -3,6 +3,8 @@ import {
   Users, Database, LayoutGrid, Code2, Smartphone, Cloud, Workflow,
   ImageIcon, MapPin, FileHeart, Sparkles
 } from "lucide-react";
+import hebronLogo from "@/assets/hebron-university-logo.png";
+import teleLogo from "@/assets/telemedicine-logo.png";
 
 /* ------------ Decorative shared backgrounds ------------ */
 function MedicalBackdrop() {
