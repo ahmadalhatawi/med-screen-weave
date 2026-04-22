@@ -1,0 +1,378 @@
+import {
+  Stethoscope, HeartPulse, Activity, Brain, Video, ShieldCheck,
+  Users, Database, LayoutGrid, Code2, Smartphone, Cloud, Workflow,
+  ImageIcon, MapPin, FileHeart, Sparkles
+} from "lucide-react";
+
+/* ------------ Decorative shared backgrounds ------------ */
+function MedicalBackdrop() {
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      <div className="absolute -top-32 -right-32 w-[500px] h-[500px] bg-gradient-hero opacity-20 animate-blob" />
+      <div className="absolute -bottom-40 -left-32 w-[600px] h-[600px] rounded-full bg-[var(--color-cyan)] opacity-15 animate-blob" style={{ animationDelay: "3s" }} />
+      <svg className="absolute top-1/3 left-10 w-64 opacity-[0.07]" viewBox="0 0 100 30">
+        <polyline points="0,15 15,15 20,5 25,25 30,15 45,15 50,8 55,22 60,15 100,15"
+          fill="none" stroke="currentColor" strokeWidth="1.2" className="text-primary" />
+      </svg>
+    </div>
+  );
+}
+
+function SectionTag({ icon: Icon, label }: { icon: any; label: string }) {
+  return (
+    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-primary text-sm font-semibold animate-fade-up">
+      <Icon className="w-4 h-4" />
+      {label}
+    </div>
+  );
+}
+
+/* ============================ SLIDE 1: COVER ============================ */
+export function CoverSlide() {
+  return (
+    <div className="relative w-full h-full bg-gradient-hero flex items-center justify-center overflow-hidden">
+      {/* 3D-ish floating molecules */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-20 w-40 h-40 rounded-full bg-white/10 blur-2xl animate-float-slow" />
+        <div className="absolute bottom-32 right-24 w-56 h-56 rounded-full bg-[var(--color-cyan)]/40 blur-3xl animate-float-slow" style={{ animationDelay: "2s" }} />
+        <div className="absolute top-1/2 left-1/3 w-24 h-24 rounded-full bg-white/15 blur-xl animate-float-slow" style={{ animationDelay: "4s" }} />
+
+        {/* Rotating ring */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] animate-spin-slow opacity-30">
+          <div className="absolute inset-0 rounded-full border-2 border-dashed border-white/40" />
+          <div className="absolute inset-12 rounded-full border border-white/30" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-white shadow-glow" />
+          <div className="absolute bottom-10 right-10 w-4 h-4 rounded-full bg-[var(--color-cyan)]" />
+        </div>
+
+        {/* Grid pattern */}
+        <div className="absolute inset-0 opacity-[0.08]"
+          style={{ backgroundImage: "linear-gradient(white 1px, transparent 1px), linear-gradient(90deg, white 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
+      </div>
+
+      <div className="relative z-10 text-center text-white px-8 max-w-5xl">
+        <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl glass-dark mb-8 animate-fade-up shadow-glow">
+          <div className="relative">
+            <HeartPulse className="w-12 h-12 text-white" />
+            <span className="absolute inset-0 rounded-full" style={{ animation: "pulse-ring 2s ease-out infinite", boxShadow: "0 0 0 2px white" }} />
+          </div>
+        </div>
+
+        <p className="text-lg md:text-xl text-white/80 mb-4 animate-fade-up delay-100 tracking-widest">مشروع التخرّج</p>
+
+        <h1 className="text-5xl md:text-7xl font-black mb-6 animate-fade-up delay-200 leading-tight text-balance">
+          منصّة الرعاية الطبية
+          <span className="block bg-gradient-to-l from-[var(--color-cyan)] to-white bg-clip-text text-transparent mt-2">
+            الافتراضية
+          </span>
+        </h1>
+
+        <p className="text-xl md:text-2xl text-white/85 max-w-3xl mx-auto animate-fade-up delay-300 leading-relaxed">
+          نظام متكامل للاستشارات الطبية عن بُعد يربط بين المرضى ومقدّمي الرعاية الصحية
+        </p>
+
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-3 animate-fade-up delay-500">
+          {[Stethoscope, Brain, Video, ShieldCheck].map((Icon, i) => (
+            <div key={i} className="w-14 h-14 rounded-2xl glass-dark flex items-center justify-center hover:scale-110 transition-transform">
+              <Icon className="w-6 h-6 text-white" />
+            </div>
+          ))}
+        </div>
+
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/60 text-sm animate-fade-up delay-700">
+          استخدم الأسهم ← → للتنقل
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ============================ SLIDE 2: INTRODUCTION ============================ */
+export function IntroductionSlide() {
+  return (
+    <div className="relative w-full h-full bg-gradient-soft p-8 md:p-16 flex flex-col justify-center overflow-hidden">
+      <MedicalBackdrop />
+      <div className="relative z-10 max-w-6xl mx-auto w-full">
+        <SectionTag icon={Sparkles} label="مقدّمة المشروع" />
+        <h2 className="text-4xl md:text-6xl font-black mt-6 mb-10 animate-fade-up delay-100 text-[var(--color-deep)]">
+          نحو رعاية صحية <span className="text-primary">رقمية</span> شاملة
+        </h2>
+
+        <div className="grid md:grid-cols-[1fr_auto] gap-10 items-center">
+          <div className="card-3d bg-gradient-card glass rounded-3xl p-8 md:p-10 shadow-soft animate-fade-up delay-200">
+            <p className="text-lg md:text-xl leading-[2.2] text-foreground/90 font-medium">
+              في ظلِّ التطوّرات التكنولوجية المتسارعة التي يشهدها العالم، وخصوصًا في فلسطين،
+              وبما تمرّ به البلاد من لأواء وبلاء وغلاء، نسألُ اللهَ العليَّ القدير أن يُفرِّج عن أهلنا
+              في القطاع، وأن يرفع عنّا وعنهم البلاء واللأواء والغلاء.
+              <br /><br />
+              ومن هذا المنطلق جاءت فكرة مشروع التخرّج، والمتمثّلة في تصميم وتطوير
+              <span className="text-primary font-bold"> منصّة للرعاية الطبية الافتراضية</span>،
+              تهدف إلى تحسين مستوى الخدمات الصحية من خلال إتاحة الاستشارات الطبية عن بُعد،
+              وتعزيز كفاءة التواصل بين مقدّمي الرعاية الصحية والمرضى، بما يلبّي احتياجات المجتمع
+              ويواكب متطلّبات التحوّل الرقمي.
+            </p>
+          </div>
+
+          <div className="hidden md:block animate-fade-up delay-300">
+            <div className="relative w-56 h-56">
+              <div className="absolute inset-0 bg-gradient-hero rounded-full opacity-30 animate-blob" />
+              <div className="absolute inset-4 bg-white rounded-full shadow-glow flex items-center justify-center">
+                <Stethoscope className="w-24 h-24 text-primary" />
+              </div>
+              <div className="absolute -top-2 -right-2 w-12 h-12 rounded-2xl bg-[var(--color-cyan)] flex items-center justify-center shadow-soft animate-float-slow">
+                <HeartPulse className="w-6 h-6 text-white" />
+              </div>
+              <div className="absolute -bottom-2 -left-2 w-12 h-12 rounded-2xl bg-primary flex items-center justify-center shadow-soft animate-float-slow" style={{ animationDelay: "2s" }}>
+                <Activity className="w-6 h-6 text-white" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ============================ SLIDE 3: PROJECT IDEA ============================ */
+export function IdeaSlide() {
+  const points = [
+    { icon: MapPin, title: "وصول الخدمات", text: "توفير خدمات طبية عن بُعد لسكان القرى والمناطق النائية." },
+    { icon: Workflow, title: "تجاوز العقبات", text: "تجاوز صعوبة الطرق وبُعد المراكز الطبية المتخصصة." },
+    { icon: Brain, title: "متابعة نفسية", text: "تمكين مرضى الطب النفسي من المتابعة الدورية دون عناء التنقل." },
+    { icon: Video, title: "استشارات آمنة", text: "إتاحة استشارات طبية آمنة عبر الاتصال المرئي." },
+    { icon: FileHeart, title: "ملف صحي رقمي", text: "توفير ملف صحي رقمي يدعم استمرارية الرعاية وجودتها." },
+  ];
+
+  return (
+    <div className="relative w-full h-full bg-gradient-soft p-8 md:p-14 flex flex-col overflow-hidden">
+      <MedicalBackdrop />
+      <div className="relative z-10 max-w-7xl mx-auto w-full flex flex-col h-full">
+        <SectionTag icon={HeartPulse} label="فكرة المشروع" />
+        <h2 className="text-4xl md:text-5xl font-black mt-5 mb-3 animate-fade-up delay-100 text-[var(--color-deep)]">
+          تسهيل وصول المرضى إلى <span className="text-primary">الخدمات الصحية</span>
+        </h2>
+        <p className="text-lg text-muted-foreground max-w-3xl animate-fade-up delay-200 mb-8 leading-loose">
+          تقوم فكرة المشروع على تسهيل وصول المرضى إلى الخدمات الصحية، خاصة في المناطق النائية وصعبة الوصول،
+          مع التركيز على الحالات التي تحتاج متابعة دورية مثل مرضى الطب النفسي.
+        </p>
+
+        <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-4 flex-1">
+          {points.map((p, i) => (
+            <div key={i}
+              className="card-3d bg-gradient-card glass rounded-2xl p-5 shadow-soft animate-fade-up flex flex-col"
+              style={{ animationDelay: `${0.2 + i * 0.1}s` }}>
+              <div className="w-12 h-12 rounded-xl bg-gradient-hero text-white flex items-center justify-center mb-4 shadow-glow">
+                <p.icon className="w-6 h-6" />
+              </div>
+              <h3 className="font-bold text-lg text-[var(--color-deep)] mb-2">{p.title}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">{p.text}</p>
+              <div className="mt-auto pt-3 text-xs text-primary font-bold">0{i + 1}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ============================ SLIDE 4: METHODOLOGY ============================ */
+export function MethodologySlide() {
+  return (
+    <div className="relative w-full h-full bg-gradient-soft p-8 md:p-14 overflow-y-auto">
+      <MedicalBackdrop />
+      <div className="relative z-10 max-w-7xl mx-auto">
+        <SectionTag icon={Code2} label="المنهجية والتقنيات" />
+        <h2 className="text-4xl md:text-5xl font-black mt-5 mb-8 animate-fade-up delay-100 text-[var(--color-deep)]">
+          منهجية العمل و<span className="text-primary">التقنيات المستخدمة</span>
+        </h2>
+
+        {/* Methodology */}
+        <div className="card-3d bg-gradient-card glass rounded-3xl p-8 mb-8 shadow-soft animate-fade-up delay-200">
+          <div className="flex items-start gap-5">
+            <div className="w-14 h-14 shrink-0 rounded-2xl bg-gradient-hero text-white flex items-center justify-center shadow-glow">
+              <Workflow className="w-7 h-7" />
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold text-[var(--color-deep)] mb-3">المنهجية: Waterfall</h3>
+              <p className="text-base md:text-lg leading-loose text-foreground/85">
+                تم اختيار منهجية <span className="font-bold text-primary">Waterfall</span> لتطوير النظام المقترح،
+                كونها تناسب المشاريع ذات المتطلبات الواضحة والمستقرة. تعتمد المنهجية على تنفيذ مراحل التطوير
+                بشكل متسلسل ومنظم، مما يضمن الوضوح والدقة ويحقق نقلة نوعية في الرعاية الطبية الافتراضية.
+              </p>
+              <div className="flex flex-wrap gap-2 mt-5">
+                {["تحليل المتطلبات", "التصميم", "التنفيذ", "الاختبار", "النشر", "الصيانة"].map((s, i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    <span className="px-3 py-1.5 rounded-lg bg-primary/10 text-primary text-sm font-semibold">{s}</span>
+                    {i < 5 && <span className="text-primary/40">←</span>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Technologies */}
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* Frontend */}
+          <div className="card-3d bg-gradient-card glass rounded-3xl p-7 shadow-soft animate-fade-up delay-300">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-12 h-12 rounded-xl bg-[var(--color-cyan)] text-[var(--color-deep)] flex items-center justify-center">
+                <Smartphone className="w-6 h-6" />
+              </div>
+              <h3 className="text-2xl font-bold text-[var(--color-deep)]">Frontend</h3>
+            </div>
+            <div className="space-y-2 mb-4">
+              <div className="flex items-center gap-2 text-foreground/90">
+                <span className="w-2 h-2 rounded-full bg-primary" />
+                <span><b>React Native</b> — لتطوير تطبيق الهاتف</span>
+              </div>
+              <div className="flex items-center gap-2 text-foreground/90">
+                <span className="w-2 h-2 rounded-full bg-primary" />
+                <span><b>React.js</b> — لتطوير موقع الويب</span>
+              </div>
+            </div>
+            <p className="text-sm font-semibold text-primary mb-2">المزايا:</p>
+            <ul className="space-y-1.5 text-sm text-muted-foreground">
+              <li>✓ تجربة مستخدم سلسة وسريعة</li>
+              <li>✓ عمل التطبيق بكفاءة عالية على مختلف الأجهزة</li>
+              <li>✓ تصميم موحد وسهل الاستخدام</li>
+            </ul>
+          </div>
+
+          {/* Backend */}
+          <div className="card-3d bg-gradient-card glass rounded-3xl p-7 shadow-soft animate-fade-up delay-500">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-12 h-12 rounded-xl bg-primary text-white flex items-center justify-center">
+                <Cloud className="w-6 h-6" />
+              </div>
+              <h3 className="text-2xl font-bold text-[var(--color-deep)]">Backend</h3>
+            </div>
+            <div className="space-y-2 mb-4">
+              <div className="flex items-center gap-2 text-foreground/90">
+                <span className="w-2 h-2 rounded-full bg-[var(--color-cyan)]" />
+                <span><b>Firebase</b> — منصة سحابية متكاملة لإدارة النظام</span>
+              </div>
+            </div>
+            <p className="text-sm font-semibold text-primary mb-2">المزايا:</p>
+            <ul className="space-y-1.5 text-sm text-muted-foreground">
+              <li>✓ إدارة المستخدمين وتسجيل الدخول بشكل آمن</li>
+              <li>✓ تخزين البيانات بشكل فوري وآمن</li>
+              <li>✓ ضمان الاستقرار وقابلية التوسع</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ============================ DIAGRAM PLACEHOLDER SLIDE ============================ */
+function DiagramSlide({
+  tag, icon: Icon, title, highlight, intro, placeholderLabel, caption,
+}: {
+  tag: string; icon: any; title: string; highlight: string;
+  intro: string; placeholderLabel: string; caption?: string;
+}) {
+  return (
+    <div className="relative w-full h-full bg-gradient-soft p-8 md:p-14 flex flex-col overflow-hidden">
+      <MedicalBackdrop />
+      <div className="relative z-10 max-w-7xl mx-auto w-full flex flex-col h-full">
+        <SectionTag icon={Icon} label={tag} />
+        <h2 className="text-4xl md:text-5xl font-black mt-5 mb-4 animate-fade-up delay-100 text-[var(--color-deep)]">
+          {title} <span className="text-primary">{highlight}</span>
+        </h2>
+        <p className="text-base md:text-lg text-foreground/80 max-w-4xl leading-loose animate-fade-up delay-200 mb-6">
+          {intro}
+        </p>
+
+        <div className="flex-1 animate-fade-up delay-300">
+          <div className="card-3d relative h-full min-h-[300px] rounded-3xl border-2 border-dashed border-primary/30 bg-gradient-card glass shadow-soft flex flex-col items-center justify-center p-8 overflow-hidden">
+            {/* corner deco */}
+            <div className="absolute top-4 left-4 w-3 h-3 rounded-full bg-primary/40" />
+            <div className="absolute top-4 right-4 w-3 h-3 rounded-full bg-[var(--color-cyan)]" />
+            <div className="absolute bottom-4 left-4 w-3 h-3 rounded-full bg-[var(--color-cyan)]" />
+            <div className="absolute bottom-4 right-4 w-3 h-3 rounded-full bg-primary/40" />
+
+            <div className="w-20 h-20 rounded-2xl bg-gradient-hero flex items-center justify-center mb-5 shadow-glow">
+              <ImageIcon className="w-10 h-10 text-white" />
+            </div>
+            <p className="text-xl font-bold text-[var(--color-deep)] mb-2">{placeholderLabel}</p>
+            <p className="text-sm text-muted-foreground">أضف صورة المخطط هنا</p>
+            <code className="mt-4 text-xs px-3 py-1.5 rounded-md bg-primary/10 text-primary font-mono">
+              {`<img src="..." alt="${tag}" />`}
+            </code>
+          </div>
+        </div>
+
+        {caption && (
+          <p className="text-center text-sm text-muted-foreground mt-4 italic animate-fade-up delay-500">{caption}</p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export function UseCaseSlide() {
+  return (
+    <DiagramSlide
+      tag="Use Case Diagram"
+      icon={Users}
+      title="مخطط حالات الاستخدام"
+      highlight="Use Case"
+      intro="يوضح هذا المخطط كيفية تفاعل المستخدمين مع النظام، حيث يعرض الأدوار المختلفة والوظائف التي يمكن لكل مستخدم تنفيذها داخل المنصة."
+      placeholderLabel="Use Case Diagram"
+      caption="الشكل (1): مخطط حالات الاستخدام للنظام"
+    />
+  );
+}
+
+export function ERDSlide() {
+  return (
+    <DiagramSlide
+      tag="Entity Relationship Diagram"
+      icon={Database}
+      title="مخطط قاعدة البيانات"
+      highlight="ERD"
+      intro="يمثل هذا المخطط البنية الداخلية لقاعدة البيانات، ويوضح الكيانات المختلفة والعلاقات بينها بطريقة منظمة تسهّل فهم تصميم النظام."
+      placeholderLabel="ERD Diagram"
+      caption="الشكل (2): مخطط الكيانات والعلاقات"
+    />
+  );
+}
+
+export function InterfacesSlide() {
+  return (
+    <div className="relative w-full h-full bg-gradient-soft p-8 md:p-14 flex flex-col overflow-hidden">
+      <MedicalBackdrop />
+      <div className="relative z-10 max-w-7xl mx-auto w-full flex flex-col h-full">
+        <SectionTag icon={LayoutGrid} label="System Interfaces" />
+        <h2 className="text-4xl md:text-5xl font-black mt-5 mb-4 animate-fade-up delay-100 text-[var(--color-deep)]">
+          واجهات <span className="text-primary">النظام</span>
+        </h2>
+        <p className="text-base md:text-lg text-foreground/80 max-w-4xl leading-loose animate-fade-up delay-200 mb-6">
+          تعرض هذه الواجهات الشكل النهائي للنظام، وتوضح كيفية تفاعل المستخدم مع المنصة وسهولة التنقل بين الخدمات المختلفة.
+        </p>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-5 flex-1">
+          {[1, 2, 3, 4, 5, 6].map((n, i) => (
+            <div
+              key={n}
+              className="card-3d relative rounded-2xl border-2 border-dashed border-primary/30 bg-gradient-card glass shadow-soft flex flex-col items-center justify-center p-6 animate-fade-up"
+              style={{ animationDelay: `${0.2 + i * 0.08}s`, minHeight: 180 }}
+            >
+              <div className="w-12 h-12 rounded-xl bg-gradient-hero flex items-center justify-center mb-3 shadow-glow">
+                <ImageIcon className="w-6 h-6 text-white" />
+              </div>
+              <p className="font-bold text-[var(--color-deep)]">واجهة {n}</p>
+              <p className="text-xs text-muted-foreground mt-1">أضف الصورة هنا</p>
+            </div>
+          ))}
+        </div>
+
+        <p className="text-center text-sm text-muted-foreground mt-5 italic animate-fade-up delay-700">
+          الشكل (3): الواجهات الرئيسية لمنصّة الرعاية الطبية الافتراضية
+        </p>
+      </div>
+    </div>
+  );
+}
