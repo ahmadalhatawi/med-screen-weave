@@ -3,6 +3,8 @@ import {
   Users, Database, LayoutGrid, Code2, Smartphone, Cloud, Workflow,
   ImageIcon, MapPin, FileHeart, Sparkles
 } from "lucide-react";
+import hebronLogo from "@/assets/hebron-university-logo.png";
+import teleLogo from "@/assets/telemedicine-logo.png";
 
 /* ------------ Decorative shared backgrounds ------------ */
 function MedicalBackdrop() {
@@ -29,59 +31,88 @@ function SectionTag({ icon: Icon, label }: { icon: any; label: string }) {
 
 /* ============================ SLIDE 1: COVER ============================ */
 export function CoverSlide() {
+  const team = [
+    ["أحمد جمعه", "هديل جرادات"],
+    ["عبدالله زهور", "شيرين طرمان"],
+  ];
+
   return (
-    <div className="relative w-full h-full bg-gradient-hero flex items-center justify-center overflow-hidden">
-      {/* 3D-ish floating molecules */}
-      <div className="absolute inset-0">
-        <div className="absolute top-20 left-20 w-40 h-40 rounded-full bg-white/10 blur-2xl animate-float-slow" />
-        <div className="absolute bottom-32 right-24 w-56 h-56 rounded-full bg-[var(--color-cyan)]/40 blur-3xl animate-float-slow" style={{ animationDelay: "2s" }} />
-        <div className="absolute top-1/2 left-1/3 w-24 h-24 rounded-full bg-white/15 blur-xl animate-float-slow" style={{ animationDelay: "4s" }} />
-
-        {/* Rotating ring */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] animate-spin-slow opacity-30">
-          <div className="absolute inset-0 rounded-full border-2 border-dashed border-white/40" />
-          <div className="absolute inset-12 rounded-full border border-white/30" />
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-white shadow-glow" />
-          <div className="absolute bottom-10 right-10 w-4 h-4 rounded-full bg-[var(--color-cyan)]" />
-        </div>
-
-        {/* Grid pattern */}
-        <div className="absolute inset-0 opacity-[0.08]"
-          style={{ backgroundImage: "linear-gradient(white 1px, transparent 1px), linear-gradient(90deg, white 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
+    <div className="relative w-full h-full bg-white overflow-hidden flex">
+      {/* Left vertical blue band */}
+      <div className="relative w-[12%] min-w-[70px] bg-gradient-to-b from-[oklch(0.82_0.09_220)] via-[oklch(0.74_0.12_215)] to-[oklch(0.6_0.14_225)]">
+        <div className="absolute top-6 right-[-1px] w-px h-24 bg-[var(--color-deep)]/40" />
+        <div className="absolute top-6 right-[-1px] w-12 h-px bg-[var(--color-deep)]/40" />
+        <div className="absolute top-[20px] right-[44px] w-2 h-2 rotate-45 bg-[var(--color-deep)]/60" />
+        <div className="absolute bottom-6 right-[-1px] w-px h-24 bg-[var(--color-deep)]/40" />
+        <div className="absolute bottom-6 right-[-1px] w-12 h-px bg-[var(--color-deep)]/40" />
+        <div className="absolute bottom-[20px] right-[44px] w-2 h-2 rotate-45 bg-[var(--color-deep)]/60" />
       </div>
 
-      <div className="relative z-10 text-center text-white px-8 max-w-5xl">
-        <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl glass-dark mb-8 animate-fade-up shadow-glow">
-          <div className="relative">
-            <HeartPulse className="w-12 h-12 text-white" />
-            <span className="absolute inset-0 rounded-full" style={{ animation: "pulse-ring 2s ease-out infinite", boxShadow: "0 0 0 2px white" }} />
-          </div>
+      {/* Background subtle blobs */}
+      <div className="pointer-events-none absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-[var(--color-cyan)]/15 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-40 -right-40 w-[600px] h-[600px] rounded-full bg-primary/10 blur-3xl" />
+
+      {/* Top-right decorative cross */}
+      <div className="absolute top-[10%] left-[6%] opacity-60 pointer-events-none">
+        <div className="relative w-20 h-20">
+          <div className="absolute top-1/2 left-0 w-full h-px bg-primary/50" />
+          <div className="absolute top-0 left-1/2 h-full w-px bg-primary/50" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rotate-45 bg-primary/70" />
         </div>
+      </div>
 
-        <p className="text-lg md:text-xl text-white/80 mb-4 animate-fade-up delay-100 tracking-widest">مشروع التخرّج</p>
+      {/* Hebron logo (upper-right of band) */}
+      <div className="absolute right-[4%] top-[15%] z-20 animate-fade-up">
+        <img src={hebronLogo} alt="جامعة الخليل" className="w-28 h-28 md:w-36 md:h-36 object-contain drop-shadow-xl" />
+      </div>
 
-        <h1 className="text-5xl md:text-7xl font-black mb-6 animate-fade-up delay-200 leading-tight text-balance">
-          منصّة الرعاية الطبية
-          <span className="block bg-gradient-to-l from-[var(--color-cyan)] to-white bg-clip-text text-transparent mt-2">
-            الافتراضية
-          </span>
-        </h1>
+      {/* TeleMEDICINE circular (lower-right of band) */}
+      <div className="absolute right-[5%] top-[55%] z-20 animate-fade-up delay-300">
+        <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-white shadow-soft flex items-center justify-center p-3 ring-1 ring-[var(--color-cyan)]/30">
+          <img src={teleLogo} alt="TeleMEDICINE" className="w-full h-full object-contain" />
+        </div>
+      </div>
 
-        <p className="text-xl md:text-2xl text-white/85 max-w-3xl mx-auto animate-fade-up delay-300 leading-relaxed">
-          نظام متكامل للاستشارات الطبية عن بُعد يربط بين المرضى ومقدّمي الرعاية الصحية
+      {/* TeleMEDICINE bottom-left logo */}
+      <div className="absolute bottom-8 left-[5%] z-20 animate-fade-up delay-500">
+        <img src={teleLogo} alt="TeleMEDICINE" className="w-24 h-24 md:w-32 md:h-32 object-contain opacity-95" />
+      </div>
+
+      {/* Main content */}
+      <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-8 md:px-16 py-8 text-center">
+        {/* Bismillah */}
+        <p className="text-2xl md:text-4xl font-bold text-[var(--color-deep)] mb-4 animate-fade-up" style={{ fontFamily: "'Amiri', 'Cairo', serif" }}>
+          بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
         </p>
 
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-3 animate-fade-up delay-500">
-          {[Stethoscope, Brain, Video, ShieldCheck].map((Icon, i) => (
-            <div key={i} className="w-14 h-14 rounded-2xl glass-dark flex items-center justify-center hover:scale-110 transition-transform">
-              <Icon className="w-6 h-6 text-white" />
+        <p className="text-xl md:text-2xl text-foreground mb-1 animate-fade-up delay-100 font-bold">جامعة الخليل</p>
+        <p className="text-base md:text-lg text-muted-foreground mb-6 animate-fade-up delay-100">كلية تكنولوجيا المعلومات</p>
+
+        <p className="text-lg md:text-xl text-primary font-bold animate-fade-up delay-200">: عنوان المشروع</p>
+        <h1 className="text-3xl md:text-5xl font-black text-[var(--color-deep)] mt-1 mb-7 animate-fade-up delay-200 leading-tight">
+          منصّة الرعاية الطبية الافتراضية
+        </h1>
+
+        <p className="text-lg md:text-xl text-primary font-bold animate-fade-up delay-300">: مشرف المشروع</p>
+        <p className="text-base md:text-lg text-foreground mb-6 mt-1 animate-fade-up delay-300">الدكتور نبيل حساسنة</p>
+
+        <p className="text-lg md:text-xl text-primary font-bold mb-3 animate-fade-up delay-500">: فريق المشروع</p>
+        <div className="grid grid-cols-2 gap-x-12 md:gap-x-24 gap-y-2 animate-fade-up delay-500">
+          {team.map((row, i) => row.map((name, j) => (
+            <div key={`${i}-${j}`} className="flex items-center gap-2 text-foreground text-sm md:text-base">
+              <span className="text-primary text-lg leading-none">❖</span>
+              <span className="font-medium">{name}</span>
             </div>
-          ))}
+          )))}
         </div>
 
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/60 text-sm animate-fade-up delay-700">
+        <p className="mt-7 text-lg md:text-xl font-bold text-[var(--color-deep)] tracking-wider animate-fade-up delay-700">
+          2025 - 2026
+        </p>
+
+        <p className="absolute bottom-3 text-xs text-muted-foreground/70 animate-fade-up delay-700">
           استخدم الأسهم ← → للتنقل
-        </div>
+        </p>
       </div>
     </div>
   );
