@@ -5,6 +5,8 @@ import {
 } from "lucide-react";
 import hebronLogo from "@/assets/hebron-university-logo.png";
 import teleLogo from "@/assets/telemedicine-logo.png";
+import stethoscopeIllustration from "@/assets/stethoscope-illustration.png";
+import heartIcon from "@/assets/heart-icon.png";
 import reactIcon from "@/assets/react-icon.png";
 import firebaseIcon from "@/assets/firebase-icon.png";
 import useCaseDiagram from "@/assets/usecase-diagram.png";
