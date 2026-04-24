@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, HeartPulse, Menu, X, Maximize2, Grid3x3 } from "lucide-react";
+import { ChevronLeft, ChevronRight, HeartPulse, Menu, X, Maximize2, Grid3x3, Sun, Moon } from "lucide-react";
 import {
   CoverSlide, IntroductionSlide, IdeaSlide, MethodologySlide,
   UseCaseSlide, ERDSlide, InterfacesSlide,
@@ -40,6 +40,19 @@ export default function Presentation() {
   const [[index, dir], setState] = useState<[number, number]>([0, 0]);
   const [menuOpen, setMenuOpen] = useState(false);
   const [gridOpen, setGridOpen] = useState(false);
+  const [theme, setTheme] = useState<"dark" | "light">(() => {
+    if (typeof window === "undefined") return "dark";
+    return (localStorage.getItem("theme") as "dark" | "light") || "dark";
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === "light") root.classList.add("light");
+    else root.classList.remove("light");
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = useCallback(() => setTheme((t) => (t === "dark" ? "light" : "dark")), []);
 
   const go = useCallback((next: number) => {
     if (next < 0 || next >= SLIDES.length) return;
@@ -61,10 +74,11 @@ export default function Presentation() {
         if (document.fullscreenElement) document.exitFullscreen();
         else document.documentElement.requestFullscreen();
       }
+      else if (e.key === "t" || e.key === "T") toggleTheme();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [next, prev, go]);
+  }, [next, prev, go, toggleTheme]);
 
   const Current = SLIDES[index].component;
   const progress = ((index + 1) / SLIDES.length) * 100;
@@ -131,6 +145,26 @@ export default function Presentation() {
           >
             <Grid3x3 className="w-4 h-4" />
           </button>
+          <motion.button
+            onClick={toggleTheme}
+            whileTap={{ scale: 0.9, rotate: 180 }}
+            className="relative w-10 h-10 rounded-xl glass hover:bg-primary/20 flex items-center justify-center text-primary transition-colors overflow-hidden"
+            aria-label="تبديل الوضع"
+            title="تبديل الوضع (T)"
+          >
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={theme}
+                initial={{ y: -20, opacity: 0, rotate: -90 }}
+                animate={{ y: 0, opacity: 1, rotate: 0 }}
+                exit={{ y: 20, opacity: 0, rotate: 90 }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] as const }}
+                className="absolute inset-0 flex items-center justify-center"
+              >
+                {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              </motion.span>
+            </AnimatePresence>
+          </motion.button>
           <button
             onClick={() => {
               if (document.fullscreenElement) document.exitFullscreen();
