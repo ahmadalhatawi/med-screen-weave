@@ -12,6 +12,7 @@ import firebaseIcon from "@/assets/firebase-icon.png";
 import useCaseDiagram from "@/assets/usecase-diagram.png";
 import databaseDiagram from "@/assets/database-diagram.png";
 import Backdrop from "./Backdrop";
+import ZoomableImage from "./ZoomableImage";
 
 /* =============== shared atoms =============== */
 const fadeUp = {
@@ -504,7 +505,7 @@ function DiagramSlide({
               transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
             />
             <div className="relative h-full w-full flex items-center justify-center bg-white/95 rounded-2xl p-6">
-              <img src={image} alt={imageAlt} className="max-w-full max-h-full object-contain" />
+              <ZoomableImage src={image} alt={imageAlt} />
             </div>
           </div>
         </motion.div>
