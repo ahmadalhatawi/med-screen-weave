@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, HeartPulse, Menu, X, Maximize2, Grid3x3 } from "lucide-react";
+import { ChevronLeft, ChevronRight, HeartPulse, Menu, X, Maximize2, Grid3x3, Sun, Moon } from "lucide-react";
 import {
   CoverSlide, IntroductionSlide, IdeaSlide, MethodologySlide,
   UseCaseSlide, ERDSlide, InterfacesSlide,
