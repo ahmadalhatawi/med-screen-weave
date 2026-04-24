@@ -18,7 +18,7 @@ const fadeUp = {
   hidden: { opacity: 0, y: 40 },
   show: (i: number = 0) => ({
     opacity: 1, y: 0,
-    transition: { duration: 0.7, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.7, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] as const },
   }),
 };
 
@@ -32,7 +32,7 @@ function Tag({ icon: Icon, label }: { icon: any; label: string }) {
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
       className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full glass-strong text-cyan border border-cyan/20"
       style={{ color: "var(--color-cyan)" }}
     >
@@ -120,7 +120,7 @@ export function CoverSlide() {
 
             <motion.h1
               initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 1, delay: 0.4, ease: [0.22, 1, 0.36, 1] as const }}
               className="text-5xl md:text-7xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-4"
             >
               منصّة الرعاية
@@ -167,7 +167,7 @@ export function CoverSlide() {
           <motion.div
             initial={{ opacity: 0, scale: 0.5, rotateY: -45 }}
             animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-            transition={{ duration: 1.2, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 1.2, delay: 0.5, ease: [0.22, 1, 0.36, 1] as const }}
             className="relative perspective-2000 hidden lg:block"
           >
             {/* Rotating rings */}
@@ -367,7 +367,7 @@ export function MethodologySlide() {
           <motion.div
             initial={{ opacity: 0, x: 60, rotateY: -10 }}
             animate={{ opacity: 1, x: 0, rotateY: 0 }}
-            transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] as const }}
             whileHover={{ y: -6 }}
             className="card-3d glass-strong rounded-3xl p-8 relative overflow-hidden"
           >
@@ -414,7 +414,7 @@ export function MethodologySlide() {
           <motion.div
             initial={{ opacity: 0, x: -60, rotateY: 10 }}
             animate={{ opacity: 1, x: 0, rotateY: 0 }}
-            transition={{ duration: 0.9, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.9, delay: 0.45, ease: [0.22, 1, 0.36, 1] as const }}
             whileHover={{ y: -6 }}
             className="card-3d glass-strong rounded-3xl p-8 relative overflow-hidden"
           >
@@ -485,7 +485,7 @@ function DiagramSlide({
         <motion.div
           initial={{ opacity: 0, y: 30, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] as const }}
           className="flex-1 min-h-0 perspective-2000"
         >
           <div className="card-3d relative h-full rounded-3xl glass-strong p-4 overflow-hidden group">

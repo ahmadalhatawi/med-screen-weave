@@ -25,14 +25,14 @@ const slideVariants = {
   }),
   center: {
     opacity: 1, x: 0, scale: 1, rotateY: 0,
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const },
   },
   exit: (dir: number) => ({
     opacity: 0,
     x: dir > 0 ? 80 : -80,
     scale: 0.95,
     rotateY: dir > 0 ? 8 : -8,
-    transition: { duration: 0.5, ease: [0.4, 0, 0.6, 1] },
+    transition: { duration: 0.5, ease: [0.4, 0, 0.6, 1] as const },
   }),
 };
 
@@ -77,7 +77,7 @@ export default function Presentation() {
         style={{ background: "linear-gradient(90deg, var(--primary), var(--color-cyan), var(--primary))" }}
         initial={false}
         animate={{ width: `${progress}%` }}
-        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
       />
 
       {/* Top nav */}
@@ -252,7 +252,7 @@ export default function Presentation() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] as const }}
               className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl w-full max-h-full overflow-auto"
               onClick={(e) => e.stopPropagation()}
             >
