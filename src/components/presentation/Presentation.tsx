@@ -78,7 +78,7 @@ export default function Presentation() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [next, prev, go]);
+  }, [next, prev, go, toggleTheme]);
 
   const Current = SLIDES[index].component;
   const progress = ((index + 1) / SLIDES.length) * 100;
