@@ -72,16 +72,14 @@ export function CoverSlide() {
         <img src={hebronLogo} alt="جامعة الخليل" className="w-28 h-28 md:w-36 md:h-36 object-contain drop-shadow-xl" />
       </div>
 
-      {/* TeleMEDICINE circular (lower-right of band) */}
-      <div className="absolute right-[5%] top-[55%] z-20 animate-fade-up delay-300">
-        <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-white shadow-soft flex items-center justify-center p-3 ring-1 ring-[var(--color-cyan)]/30">
-          <img src={teleLogo} alt="TeleMEDICINE" className="w-full h-full object-contain" />
-        </div>
+      {/* Stethoscope illustration (lower-right) */}
+      <div className="absolute right-[3%] top-[50%] z-20 animate-fade-up delay-300">
+        <img src={stethoscopeIllustration} alt="Telemedicine" className="w-40 h-40 md:w-56 md:h-56 object-contain drop-shadow-xl" />
       </div>
 
-      {/* TeleMEDICINE bottom-left logo */}
+      {/* Project header logo (bottom-left) */}
       <div className="absolute bottom-8 left-[5%] z-20 animate-fade-up delay-500">
-        <img src={teleLogo} alt="TeleMEDICINE" className="w-24 h-24 md:w-32 md:h-32 object-contain opacity-95" />
+        <img src={heartIcon} alt="منصة الرعاية الطبية الافتراضية" className="h-20 md:h-24 object-contain opacity-95" />
       </div>
 
       {/* Main content */}
