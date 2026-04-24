@@ -74,6 +74,7 @@ export default function Presentation() {
         if (document.fullscreenElement) document.exitFullscreen();
         else document.documentElement.requestFullscreen();
       }
+      else if (e.key === "t" || e.key === "T") toggleTheme();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
