@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Stethoscope, HeartPulse, Activity, Brain, Video,
   Users, Database, LayoutGrid, Code2, Workflow,
-  ImageIcon, MapPin, FileHeart, Sparkles, ArrowUpRight,
+  MapPin, FileHeart, Sparkles, ArrowUpRight,
   Zap, Shield, Globe2,
 } from "lucide-react";
 import hebronLogo from "@/assets/hebron-university-logo.png";
@@ -476,17 +476,17 @@ function DiagramSlide({
   return (
     <div className="relative w-full h-full overflow-hidden noise" style={{ background: "var(--gradient-soft)" }}>
       <Backdrop />
-      <div className="relative z-10 max-w-7xl mx-auto w-full h-full flex flex-col px-8 md:px-12 py-8">
+      <div className="relative z-10 max-w-7xl mx-auto w-full h-full flex flex-col px-4 sm:px-8 md:px-12 py-5 md:py-8 overflow-y-auto">
         <Tag icon={Icon} label={tag} />
         <motion.h2
           variants={fadeUp} initial="hidden" animate="show" custom={1}
-          className="text-3xl md:text-5xl font-black mt-4 mb-2 leading-tight"
+          className="text-2xl sm:text-3xl md:text-5xl font-black mt-3 md:mt-4 mb-2 leading-tight tracking-normal"
         >
           {title} <span className="text-gradient">{highlight}</span>
         </motion.h2>
         <motion.p
           variants={fadeUp} initial="hidden" animate="show" custom={2}
-          className="text-sm md:text-base text-muted-foreground max-w-4xl leading-relaxed mb-4"
+          className="text-xs sm:text-sm md:text-base text-muted-foreground max-w-4xl leading-relaxed mb-3 md:mb-4"
         >
           {intro}
         </motion.p>
@@ -495,9 +495,9 @@ function DiagramSlide({
           initial={{ opacity: 0, y: 30, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] as const }}
-          className="flex-1 min-h-0 perspective-2000"
+          className="flex-1 min-h-[320px] md:min-h-0"
         >
-          <div className="card-3d relative h-full rounded-3xl glass-strong p-4 overflow-hidden group">
+          <div className="relative h-full rounded-3xl glass-strong p-2 sm:p-4 overflow-hidden group">
             {/* corner accents */}
             {[
               "top-3 left-3", "top-3 right-3", "bottom-3 left-3", "bottom-3 right-3"
@@ -512,7 +512,7 @@ function DiagramSlide({
               animate={{ y: ["-10%", "110%"] }}
               transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
             />
-            <div className="relative h-full w-full flex items-center justify-center bg-white/95 rounded-2xl p-6">
+            <div className="relative h-full w-full flex items-center justify-center bg-white/95 rounded-2xl p-2 sm:p-4 md:p-6">
               <ZoomableImage src={image} alt={imageAlt} />
             </div>
           </div>
