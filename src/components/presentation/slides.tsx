@@ -66,8 +66,6 @@ function Title({ children, highlight }: { children: React.ReactNode; highlight?:
 
 /* ============================ SLIDE 1: COVER ============================ */
 export function CoverSlide() {
-  const team = ["أحمد جمعه", "هديل جرادات", "عبدالله زهور", "شيرين طرمان"];
-
   return (
     <div className="relative w-full h-full overflow-hidden bg-background noise">
       <Backdrop />
@@ -75,123 +73,33 @@ export function CoverSlide() {
       {/* Top decorative bar */}
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
 
-      {/* Hebron logo top right */}
-      <motion.div
-        initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="absolute top-8 right-8 md:top-12 md:right-12 z-20 flex items-center gap-3 glass-strong rounded-2xl px-4 py-3"
-      >
-        <img src={hebronLogo} alt="جامعة الخليل" className="w-12 h-12 md:w-14 md:h-14 object-contain" />
-        <div className="text-right">
-          <p className="text-sm font-bold text-foreground">جامعة الخليل</p>
-          <p className="text-[10px] text-muted-foreground">كلية تكنولوجيا المعلومات</p>
-        </div>
-      </motion.div>
-
-      {/* Year badge top left */}
-      <motion.div
-        initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="absolute top-8 left-8 md:top-12 md:left-12 z-20 glass-strong rounded-2xl px-5 py-3"
-      >
-        <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Academic Year</p>
-        <p className="text-lg font-black text-gradient">2025 — 2026</p>
-      </motion.div>
-
       {/* Main content grid */}
-      <div className="relative z-10 h-full flex items-center justify-center px-4 sm:px-8 md:px-20 pt-24 pb-8 md:py-12">
-        <div className="grid lg:grid-cols-[1fr_auto] gap-8 lg:gap-20 items-center max-w-7xl w-full">
-          {/* Text */}
-          <div className="text-center lg:text-right">
-            <motion.p
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground/80 mb-4 md:mb-6 font-quran"
-            >
-              بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-light mb-6"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-cyan" style={{ color: "var(--color-cyan)" }} />
-              <span className="text-xs font-bold tracking-widest uppercase text-cyan" style={{ color: "var(--color-cyan)" }}>
-                Graduation Project
-              </span>
-            </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.4, ease: [0.22, 1, 0.36, 1] as const }}
-              layoutId="main-title"
-              className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[1.08] tracking-normal mb-4"
-            >
-              منصّة الرعاية
-              <br />
-              <span className="text-gradient">الطبية الافتراضية</span>
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.7 }}
-              className="text-base md:text-xl text-muted-foreground max-w-xl mb-5 md:mb-8 lg:mr-0 lg:ml-auto leading-relaxed"
-            >
-              نظام متكامل للاستشارات الطبية عن بُعد يربط الأطباء والمرضى عبر تجربة رقمية سلسة وآمنة.
-            </motion.p>
-
-            {/* Supervisor */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.85 }}
-              className="inline-flex items-center gap-3 glass rounded-2xl px-5 py-3 mb-6"
-            >
-              <div className="w-2 h-2 rounded-full bg-cyan" style={{ background: "var(--color-cyan)" }} />
-              <p className="text-sm text-muted-foreground">إشراف</p>
-              <p className="text-base font-bold text-foreground">د. نبيل حساسنة</p>
-            </motion.div>
-
-            {/* Team */}
-            <motion.div
-              variants={stagger} initial="hidden" animate="show"
-              className="flex flex-wrap gap-2 justify-center lg:justify-end"
-            >
-              {team.map((name, i) => (
-                <motion.div
-                  key={name} variants={fadeUp} custom={i + 9}
-                  className="glass rounded-xl px-4 py-2 text-sm font-semibold text-foreground/90 border border-primary/10 hover:border-primary/40 hover:scale-105 transition-all"
-                >
-                  {name}
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-
-          {/* 3D logo display */}
+      <div className="relative z-10 flex h-full items-center justify-center px-[clamp(1.875rem,5vw,3.75rem)] py-8 sm:py-10 md:py-12">
+        <div className="grid w-full max-w-7xl grid-cols-1 items-center gap-8 md:gap-10 lg:grid-cols-[minmax(280px,0.95fr)_minmax(360px,1.05fr)] lg:gap-16 xl:gap-20">
+          {/* 3D logo display - kept on the left */}
           <motion.div
             initial={{ opacity: 0, scale: 0.5, rotateY: -45 }}
             animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-            transition={{ duration: 1.2, delay: 0.5, ease: [0.22, 1, 0.36, 1] as const }}
-            className="relative perspective-2000 hidden lg:block"
+            transition={{ duration: 1.2, delay: 0.2, ease: [0.22, 1, 0.36, 1] as const }}
+            className="relative order-1 flex justify-start perspective-2000"
           >
             {/* Rotating rings */}
             <motion.div
-              className="absolute inset-0 rounded-full"
-              style={{ background: "var(--gradient-aurora)", filter: "blur(40px)", opacity: 0.5 }}
+              className="absolute left-0 top-1/2 aspect-square w-[min(74vw,380px)] -translate-y-1/2 rounded-full"
+              style={{ background: "var(--gradient-aurora)", filter: "blur(40px)", opacity: 0.42 }}
               animate={{ rotate: 360 }}
               transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
             />
 
-            <div className="relative w-[380px] h-[380px] flex items-center justify-center preserve-3d">
+            <div className="relative flex aspect-square w-[min(74vw,380px)] items-center justify-center preserve-3d sm:w-[min(58vw,380px)] md:w-[min(46vw,380px)] lg:w-[380px]">
               {/* Outer ring */}
               <motion.div
                 className="absolute inset-0 rounded-full border border-primary/30"
                 animate={{ rotate: 360 }}
                 transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
               >
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-primary shadow-glow" />
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full" style={{ background: "var(--color-cyan)" }} />
+                <div className="absolute top-0 left-1/2 h-3 w-3 -translate-x-1/2 rounded-full bg-primary shadow-glow" />
+                <div className="absolute bottom-0 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full" style={{ background: "var(--color-cyan)" }} />
               </motion.div>
 
               {/* Middle ring */}
@@ -203,11 +111,11 @@ export function CoverSlide() {
 
               {/* Inner glass core */}
               <motion.div
-                className="relative w-64 h-64 rounded-full glass-strong shadow-glow flex items-center justify-center"
+                className="relative flex aspect-square w-[68%] items-center justify-center rounded-full glass-strong shadow-glow"
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               >
-                <img src={teleLogo} alt="TeleMEDICINE" className="w-44 h-44 object-contain drop-shadow-2xl" />
+                <img src={teleLogo} alt="TeleMEDICINE" className="h-[68%] w-[68%] object-contain drop-shadow-2xl" />
               </motion.div>
 
               {/* Floating mini icons */}
@@ -219,18 +127,79 @@ export function CoverSlide() {
               ].map(({ Icon, angle }, i) => (
                 <motion.div
                   key={i}
-                  className="absolute w-14 h-14 rounded-2xl glass-strong flex items-center justify-center shadow-soft"
+                  className="absolute flex h-11 w-11 items-center justify-center rounded-2xl glass-strong shadow-soft sm:h-12 sm:w-12 lg:h-14 lg:w-14"
                   style={{
                     left: "50%", top: "50%",
-                    transform: `rotate(${angle}deg) translateY(-200px) rotate(-${angle}deg) translate(-50%, -50%)`,
+                    transform: `rotate(${angle}deg) translateY(calc(-1 * min(39vw, 200px))) rotate(-${angle}deg) translate(-50%, -50%)`,
                   }}
                   animate={{ y: [0, -8, 0] }}
                   transition={{ duration: 3, repeat: Infinity, delay: i * 0.5, ease: "easeInOut" }}
                 >
-                  <Icon className="w-6 h-6 text-primary" />
+                  <Icon className="h-5 w-5 text-primary lg:h-6 lg:w-6" />
                 </motion.div>
               ))}
             </div>
+          </motion.div>
+
+          {/* Text */}
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            animate="show"
+            className="order-2 mx-auto flex w-full max-w-2xl flex-col items-end text-right lg:mx-0 lg:mr-0"
+            dir="rtl"
+          >
+            <motion.div variants={fadeUp} className="mb-5 flex items-center gap-3 self-end md:mb-6">
+              <img src={hebronLogo} alt="جامعة الخليل" className="h-12 w-12 object-contain md:h-14 md:w-14" />
+              <div className="text-right">
+                <p className="text-sm font-bold text-foreground md:text-base">جامعة الخليل</p>
+                <p className="text-xs text-muted-foreground">كلية تكنولوجيا المعلومات</p>
+              </div>
+            </motion.div>
+
+            <motion.div variants={fadeUp} className="mb-5 inline-flex items-center gap-2 rounded-full glass-light px-4 py-1.5 md:mb-6">
+              <Sparkles className="h-3.5 w-3.5" style={{ color: "var(--color-cyan)" }} />
+              <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "var(--color-cyan)" }}>
+                Graduation Project
+              </span>
+            </motion.div>
+
+            <motion.h1
+              variants={fadeUp}
+              custom={1}
+              layoutId="main-title"
+              className="mb-4 max-w-[12ch] text-right text-[clamp(2.7rem,8.5vw,6rem)] font-black leading-[1.04] tracking-normal text-foreground md:mb-5 lg:text-[clamp(4.5rem,6.5vw,6.2rem)]"
+            >
+              منصة الرعاية الصحية
+              <br />
+              <span className="text-gradient">الافتراضية</span>
+            </motion.h1>
+
+            <motion.p
+              variants={fadeUp}
+              custom={2}
+              className="mb-6 max-w-xl text-right text-base leading-8 text-muted-foreground sm:text-lg md:mb-8 md:text-xl md:leading-9"
+            >
+              نظام رقمي يربط الأطباء والمرضى لتقديم استشارات طبية عن بُعد بسهولة وأمان.
+            </motion.p>
+
+            <motion.div
+              variants={fadeUp}
+              custom={3}
+              className="mb-4 w-full max-w-xl rounded-2xl glass px-5 py-4 text-right shadow-soft"
+            >
+              <p className="text-sm font-semibold text-muted-foreground md:text-base">إشراف: <span className="font-black text-foreground">د. نبيل حساسين</span></p>
+            </motion.div>
+
+            <motion.div
+              variants={fadeUp}
+              custom={4}
+              className="w-full max-w-xl rounded-2xl glass-light px-5 py-4 text-right"
+            >
+              <p className="text-sm font-semibold leading-7 text-muted-foreground md:text-base md:leading-8">
+                إعداد: <span className="font-black text-foreground">أحمد جمعة – هديل جرادات – عبدالله زهور – شيرين طه</span>
+              </p>
+            </motion.div>
           </motion.div>
         </div>
       </div>
