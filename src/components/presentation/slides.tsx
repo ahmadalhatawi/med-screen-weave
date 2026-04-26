@@ -311,13 +311,13 @@ export function IdeaSlide() {
   return (
     <div className="relative w-full h-full overflow-hidden noise" style={{ background: "var(--gradient-soft)" }}>
       <Backdrop />
-      <div className="relative z-10 max-w-7xl mx-auto w-full h-full flex flex-col px-8 md:px-16 py-12">
+      <div className="relative z-10 max-w-7xl mx-auto w-full h-full flex flex-col px-4 sm:px-8 md:px-16 py-6 md:py-12 overflow-y-auto">
         <Tag icon={HeartPulse} label="Project Idea" />
         <Title highlight="الخدمات الصحية">تسهيل وصول المرضى إلى</Title>
 
         <motion.p
           variants={fadeUp} initial="hidden" animate="show" custom={2}
-          className="text-base md:text-lg text-muted-foreground max-w-3xl mb-8 leading-loose"
+          className="text-sm md:text-lg text-muted-foreground max-w-3xl mb-5 md:mb-8 leading-loose"
         >
           تسهيل وصول المرضى إلى الخدمات الصحية، خاصة في المناطق النائية،
           مع التركيز على الحالات التي تحتاج متابعة دورية كمرضى الطب النفسي.
@@ -325,22 +325,26 @@ export function IdeaSlide() {
 
         <motion.div
           variants={stagger} initial="hidden" animate="show"
-          className="grid grid-cols-2 lg:grid-cols-5 gap-4 flex-1"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4 flex-1 min-h-0"
         >
           {points.map((p, i) => (
             <motion.div
               key={i}
               variants={fadeUp} custom={i + 3}
               whileHover={{ y: -8, transition: { duration: 0.3 } }}
-              className="card-3d glass-strong rounded-3xl p-6 flex flex-col relative overflow-hidden group"
+              className="card-3d glass-strong rounded-3xl p-4 md:p-6 flex flex-col relative overflow-hidden group min-h-[150px]"
             >
               <div className="absolute -top-10 -right-10 w-32 h-32 bg-gradient-glow opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="absolute top-4 left-4 text-5xl font-black text-primary/10 group-hover:text-primary/20 transition-colors">
                 0{i + 1}
               </div>
-              <div className="relative w-14 h-14 rounded-2xl bg-gradient-hero flex items-center justify-center mb-4 shadow-glow">
-                <p.Icon className="w-7 h-7 text-white" />
-              </div>
+              <motion.div
+                className="relative w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-gradient-hero flex items-center justify-center mb-3 md:mb-4 shadow-glow"
+                animate={{ y: [0, -6, 0], rotate: [0, i % 2 ? -5 : 5, 0] }}
+                transition={{ duration: 3 + i * 0.2, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <p.Icon className="w-6 h-6 md:w-7 md:h-7 text-white" />
+              </motion.div>
               <h3 className="relative font-bold text-lg text-foreground mb-2">{p.title}</h3>
               <p className="relative text-sm text-muted-foreground leading-relaxed">{p.text}</p>
             </motion.div>
