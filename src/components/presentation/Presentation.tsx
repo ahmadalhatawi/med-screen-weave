@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ChevronLeft, ChevronRight, HeartPulse, Menu, X, Maximize2, Grid3x3, Sun, Moon } from "lucide-react";
 import {
   CoverSlide, IntroductionSlide, IdeaSlide, MethodologySlide,
@@ -40,6 +40,12 @@ export default function Presentation() {
   const [[index, dir], setState] = useState<[number, number]>([0, 0]);
   const [menuOpen, setMenuOpen] = useState(false);
   const [gridOpen, setGridOpen] = useState(false);
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+  const smoothX = useSpring(pointerX, { stiffness: 80, damping: 22 });
+  const smoothY = useSpring(pointerY, { stiffness: 80, damping: 22 });
+  const rotateY = useTransform(smoothX, [-0.5, 0.5], [4, -4]);
+  const rotateX = useTransform(smoothY, [-0.5, 0.5], [-3, 3]);
   const [theme, setTheme] = useState<"dark" | "light">(() => {
     if (typeof window === "undefined") return "dark";
     return (localStorage.getItem("theme") as "dark" | "light") || "dark";
@@ -82,6 +88,7 @@ export default function Presentation() {
 
   const Current = SLIDES[index].component;
   const progress = ((index + 1) / SLIDES.length) * 100;
+  const imageFocusedSlide = SLIDES[index].id === "usecase" || SLIDES[index].id === "erd";
 
   return (
     <div dir="rtl" className="fixed inset-0 bg-background overflow-hidden flex flex-col font-body">
@@ -95,11 +102,12 @@ export default function Presentation() {
       />
 
       {/* Top nav */}
-      <header className="relative z-30 flex items-center justify-between px-4 md:px-8 py-4 glass-strong border-b border-white/5">
+      <header className="relative z-30 flex items-center justify-between gap-3 px-3 sm:px-4 md:px-8 py-3 md:py-4 glass-strong border-b border-white/5">
         <div className="flex items-center gap-3">
           <motion.div
             whileHover={{ scale: 1.1, rotate: 10 }}
-            className="w-11 h-11 rounded-2xl bg-gradient-hero flex items-center justify-center shadow-glow"
+            layoutId="app-logo"
+            className="w-10 h-10 md:w-11 md:h-11 rounded-2xl bg-gradient-hero flex items-center justify-center shadow-glow shrink-0"
           >
             <HeartPulse className="w-5 h-5 text-white" />
           </motion.div>
@@ -131,7 +139,7 @@ export default function Presentation() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           <span className="text-sm font-mono text-muted-foreground tabular-nums hidden sm:inline">
             <span className="text-gradient font-black">{String(index + 1).padStart(2, "0")}</span>
             <span className="mx-1">/</span>
@@ -139,7 +147,7 @@ export default function Presentation() {
           </span>
           <button
             onClick={() => setGridOpen(true)}
-            className="w-10 h-10 rounded-xl glass hover:bg-primary/20 flex items-center justify-center text-primary transition-colors"
+            className="w-9 h-9 md:w-10 md:h-10 rounded-xl glass hover:bg-primary/20 flex items-center justify-center text-primary transition-colors"
             aria-label="عرض الشبكة"
             title="عرض الشبكة (G)"
           >
@@ -148,7 +156,7 @@ export default function Presentation() {
           <motion.button
             onClick={toggleTheme}
             whileTap={{ scale: 0.9, rotate: 180 }}
-            className="relative w-10 h-10 rounded-xl glass hover:bg-primary/20 flex items-center justify-center text-primary transition-colors overflow-hidden"
+            className="relative w-9 h-9 md:w-10 md:h-10 rounded-xl glass hover:bg-primary/20 flex items-center justify-center text-primary transition-colors overflow-hidden"
             aria-label="تبديل الوضع"
             title="تبديل الوضع (T)"
           >
@@ -178,7 +186,7 @@ export default function Presentation() {
           </button>
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="xl:hidden w-10 h-10 rounded-xl glass flex items-center justify-center text-primary"
+            className="xl:hidden w-9 h-9 md:w-10 md:h-10 rounded-xl glass flex items-center justify-center text-primary"
             aria-label="القائمة"
           >
             {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -213,7 +221,17 @@ export default function Presentation() {
       </AnimatePresence>
 
       {/* Slide stage */}
-      <main className="relative flex-1 overflow-hidden perspective-2000">
+      <main
+        className="relative flex-1 overflow-hidden perspective-2000"
+        onPointerMove={(event) => {
+          pointerX.set(event.clientX / window.innerWidth - 0.5);
+          pointerY.set(event.clientY / window.innerHeight - 0.5);
+        }}
+        onPointerLeave={() => {
+          pointerX.set(0);
+          pointerY.set(0);
+        }}
+      >
         <AnimatePresence mode="wait" custom={dir}>
           <motion.div
             key={index}
@@ -222,6 +240,7 @@ export default function Presentation() {
             initial="enter"
             animate="center"
             exit="exit"
+            style={imageFocusedSlide ? undefined : { rotateX, rotateY }}
             className="absolute inset-0 preserve-3d"
           >
             <Current />
@@ -235,7 +254,7 @@ export default function Presentation() {
           onClick={prev}
           disabled={index === 0}
           aria-label="السابق"
-          className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-2xl glass-strong shadow-soft flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-colors disabled:opacity-20 disabled:cursor-not-allowed"
+            className="absolute right-2 sm:right-4 md:right-8 bottom-4 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 z-20 w-11 h-11 md:w-14 md:h-14 rounded-2xl glass-strong shadow-soft flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-colors disabled:opacity-20 disabled:cursor-not-allowed"
         >
           <ChevronRight className="w-6 h-6" />
         </motion.button>
@@ -245,14 +264,14 @@ export default function Presentation() {
           onClick={next}
           disabled={index === SLIDES.length - 1}
           aria-label="التالي"
-          className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-2xl glass-strong shadow-soft flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-colors disabled:opacity-20 disabled:cursor-not-allowed"
+            className="absolute left-2 sm:left-4 md:left-8 bottom-4 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 z-20 w-11 h-11 md:w-14 md:h-14 rounded-2xl glass-strong shadow-soft flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-colors disabled:opacity-20 disabled:cursor-not-allowed"
         >
           <ChevronLeft className="w-6 h-6" />
         </motion.button>
       </main>
 
       {/* Bottom dots */}
-      <footer className="relative z-30 px-4 md:px-8 py-4 glass-strong border-t border-white/5">
+      <footer className="relative z-30 px-4 md:px-8 py-3 md:py-4 glass-strong border-t border-white/5">
         <div className="flex items-center justify-center gap-2">
           {SLIDES.map((s, i) => (
             <button

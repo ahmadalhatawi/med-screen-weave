@@ -1,10 +1,35 @@
-import { motion } from "framer-motion";
+import { useEffect } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 export default function Backdrop() {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const smoothX = useSpring(mouseX, { stiffness: 80, damping: 24 });
+  const smoothY = useSpring(mouseY, { stiffness: 80, damping: 24 });
+  const glowX = useTransform(smoothX, (v) => `${50 + v * 8}%`);
+  const glowY = useTransform(smoothY, (v) => `${50 + v * 8}%`);
+
+  useEffect(() => {
+    const onMove = (event: PointerEvent) => {
+      mouseX.set(event.clientX / window.innerWidth - 0.5);
+      mouseY.set(event.clientY / window.innerHeight - 0.5);
+    };
+    window.addEventListener("pointermove", onMove);
+    return () => window.removeEventListener("pointermove", onMove);
+  }, [mouseX, mouseY]);
+
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
       {/* Animated grid */}
       <div className="absolute inset-0 bg-grid opacity-40" />
+
+      {/* Medical neon glow following the pointer */}
+      <motion.div
+        className="absolute inset-0 opacity-70"
+        style={{
+          background: `radial-gradient(circle at ${glowX} ${glowY}, var(--medical-neon-glow), transparent 34%)`,
+        }}
+      />
 
       {/* Aurora orb - top right */}
       <motion.div
@@ -22,31 +47,42 @@ export default function Backdrop() {
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      {/* Floating particles */}
-      {Array.from({ length: 15 }).map((_, i) => (
+      {/* Floating interactive particles */}
+      {Array.from({ length: 34 }).map((_, i) => (
         <motion.div
           key={i}
-          className="absolute w-1 h-1 rounded-full bg-primary/60"
+          className="absolute w-1 h-1 rounded-full bg-primary/60 shadow-glow"
           style={{ left: `${(i * 7 + 5) % 100}%`, top: `${(i * 13 + 10) % 100}%` }}
           animate={{
-            y: [0, -30, 0],
+            x: [0, (i % 2 ? 18 : -18), 0],
+            y: [0, -34 - (i % 5) * 4, 0],
             opacity: [0.2, 0.8, 0.2],
             scale: [1, 1.5, 1],
           }}
-          transition={{ duration: 4 + (i % 4), repeat: Infinity, delay: i * 0.3, ease: "easeInOut" }}
+          transition={{ duration: 4 + (i % 6), repeat: Infinity, delay: i * 0.16, ease: "easeInOut" }}
         />
       ))}
 
-      {/* ECG line */}
-      <svg className="absolute top-1/2 left-0 w-full opacity-[0.06]" viewBox="0 0 1200 100" preserveAspectRatio="none">
-        <motion.polyline
-          points="0,50 200,50 220,20 240,80 260,50 500,50 520,30 540,70 560,50 800,50 820,15 840,85 860,50 1200,50"
-          fill="none" stroke="currentColor" strokeWidth="1.5" className="text-primary"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 3, ease: "easeInOut" }}
-        />
-      </svg>
+      {/* Continuous ECG monitor line */}
+      <div className="absolute top-[48%] left-0 w-[200%] opacity-[0.12] overflow-hidden">
+        <motion.svg
+          className="w-full h-28 text-primary"
+          viewBox="0 0 2400 100"
+          preserveAspectRatio="none"
+          animate={{ x: [0, -1200] }}
+          transition={{ duration: 9, repeat: Infinity, ease: "linear" }}
+        >
+          {[0, 1200].map((offset) => (
+            <polyline
+              key={offset}
+              points={`${offset},50 ${offset + 180},50 ${offset + 205},20 ${offset + 230},82 ${offset + 255},50 ${offset + 470},50 ${offset + 495},32 ${offset + 520},68 ${offset + 545},50 ${offset + 760},50 ${offset + 785},14 ${offset + 812},88 ${offset + 840},50 ${offset + 1200},50`}
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            />
+          ))}
+        </motion.svg>
+      </div>
     </div>
   );
 }

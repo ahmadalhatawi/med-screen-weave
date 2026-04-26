@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ZoomIn, ZoomOut, X, Maximize2, RotateCcw } from "lucide-react";
+import { ZoomIn, ZoomOut, X, Maximize2, RotateCcw, ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from "lucide-react";
 
 interface Props {
   src: string;
@@ -18,6 +18,7 @@ export default function ZoomableImage({ src, alt, className }: Props) {
   const reset = useCallback(() => { setScale(1); setPos({ x: 0, y: 0 }); }, []);
   const zoomIn = useCallback(() => setScale((s) => Math.min(s + 0.5, 6)), []);
   const zoomOut = useCallback(() => setScale((s) => Math.max(s - 0.5, 1)), []);
+  const pan = useCallback((x: number, y: number) => setPos((p) => ({ x: p.x + x, y: p.y + y })), []);
 
   useEffect(() => {
     if (!open) return;
@@ -93,6 +94,19 @@ export default function ZoomableImage({ src, alt, className }: Props) {
               </span>
               <button onClick={zoomIn} className="w-10 h-10 rounded-xl hover:bg-primary/20 flex items-center justify-center text-white transition" title="تكبير (+)">
                 <ZoomIn className="w-4 h-4" />
+              </button>
+              <div className="w-px h-6 bg-white/20 mx-1" />
+              <button onClick={() => pan(0, 60)} className="w-10 h-10 rounded-xl hover:bg-primary/20 flex items-center justify-center text-white transition" title="أعلى">
+                <ArrowUp className="w-4 h-4" />
+              </button>
+              <button onClick={() => pan(0, -60)} className="w-10 h-10 rounded-xl hover:bg-primary/20 flex items-center justify-center text-white transition" title="أسفل">
+                <ArrowDown className="w-4 h-4" />
+              </button>
+              <button onClick={() => pan(-60, 0)} className="w-10 h-10 rounded-xl hover:bg-primary/20 flex items-center justify-center text-white transition" title="يمين">
+                <ArrowRight className="w-4 h-4" />
+              </button>
+              <button onClick={() => pan(60, 0)} className="w-10 h-10 rounded-xl hover:bg-primary/20 flex items-center justify-center text-white transition" title="يسار">
+                <ArrowLeft className="w-4 h-4" />
               </button>
               <div className="w-px h-6 bg-white/20 mx-1" />
               <button onClick={reset} className="w-10 h-10 rounded-xl hover:bg-primary/20 flex items-center justify-center text-white transition" title="إعادة (0)">

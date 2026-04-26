@@ -1,8 +1,9 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Stethoscope, HeartPulse, Activity, Brain, Video,
   Users, Database, LayoutGrid, Code2, Workflow,
-  ImageIcon, MapPin, FileHeart, Sparkles, ArrowUpRight,
+  MapPin, FileHeart, Sparkles, ArrowUpRight,
   Zap, Shield, Globe2,
 } from "lucide-react";
 import hebronLogo from "@/assets/hebron-university-logo.png";
@@ -11,6 +12,9 @@ import reactIcon from "@/assets/react-icon.png";
 import firebaseIcon from "@/assets/firebase-icon.png";
 import useCaseDiagram from "@/assets/usecase-diagram.png";
 import databaseDiagram from "@/assets/database-diagram.png";
+import coverReference from "@/assets/cover-reference.png";
+import appIcon from "@/assets/app-icon.png";
+import stethoscopeIllustration from "@/assets/stethoscope-illustration.png";
 import Backdrop from "./Backdrop";
 import ZoomableImage from "./ZoomableImage";
 
@@ -52,7 +56,7 @@ function Title({ children, highlight }: { children: React.ReactNode; highlight?:
     <motion.h2
       variants={fadeUp}
       initial="hidden" animate="show" custom={1}
-      className="text-5xl md:text-7xl font-black mt-6 mb-4 leading-[1.1] tracking-tight"
+      className="text-3xl sm:text-4xl md:text-6xl xl:text-7xl font-black mt-4 md:mt-6 mb-3 md:mb-4 leading-[1.12] tracking-normal"
     >
       {children}{" "}
       {highlight && <span className="text-gradient">{highlight}</span>}
@@ -95,15 +99,14 @@ export function CoverSlide() {
       </motion.div>
 
       {/* Main content grid */}
-      <div className="relative z-10 h-full flex items-center justify-center px-8 md:px-20">
-        <div className="grid lg:grid-cols-[1fr_auto] gap-12 lg:gap-20 items-center max-w-7xl w-full">
+      <div className="relative z-10 h-full flex items-center justify-center px-4 sm:px-8 md:px-20 pt-24 pb-8 md:py-12">
+        <div className="grid lg:grid-cols-[1fr_auto] gap-8 lg:gap-20 items-center max-w-7xl w-full">
           {/* Text */}
           <div className="text-center lg:text-right">
             <motion.p
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-2xl md:text-3xl font-bold text-foreground/80 mb-6"
-              style={{ fontFamily: "'Amiri', 'Cairo', serif" }}
+              className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground/80 mb-4 md:mb-6 font-quran"
             >
               بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
             </motion.p>
@@ -122,7 +125,8 @@ export function CoverSlide() {
             <motion.h1
               initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.4, ease: [0.22, 1, 0.36, 1] as const }}
-              className="text-5xl md:text-7xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-4"
+              layoutId="main-title"
+              className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[1.08] tracking-normal mb-4"
             >
               منصّة الرعاية
               <br />
@@ -132,7 +136,7 @@ export function CoverSlide() {
             <motion.p
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.7 }}
-              className="text-lg md:text-xl text-muted-foreground max-w-xl mb-8 lg:mr-0 lg:ml-auto"
+              className="text-base md:text-xl text-muted-foreground max-w-xl mb-5 md:mb-8 lg:mr-0 lg:ml-auto leading-relaxed"
             >
               نظام متكامل للاستشارات الطبية عن بُعد يربط الأطباء والمرضى عبر تجربة رقمية سلسة وآمنة.
             </motion.p>
@@ -307,13 +311,13 @@ export function IdeaSlide() {
   return (
     <div className="relative w-full h-full overflow-hidden noise" style={{ background: "var(--gradient-soft)" }}>
       <Backdrop />
-      <div className="relative z-10 max-w-7xl mx-auto w-full h-full flex flex-col px-8 md:px-16 py-12">
+      <div className="relative z-10 max-w-7xl mx-auto w-full h-full flex flex-col px-4 sm:px-8 md:px-16 py-6 md:py-12 overflow-y-auto">
         <Tag icon={HeartPulse} label="Project Idea" />
         <Title highlight="الخدمات الصحية">تسهيل وصول المرضى إلى</Title>
 
         <motion.p
           variants={fadeUp} initial="hidden" animate="show" custom={2}
-          className="text-base md:text-lg text-muted-foreground max-w-3xl mb-8 leading-loose"
+          className="text-sm md:text-lg text-muted-foreground max-w-3xl mb-5 md:mb-8 leading-loose"
         >
           تسهيل وصول المرضى إلى الخدمات الصحية، خاصة في المناطق النائية،
           مع التركيز على الحالات التي تحتاج متابعة دورية كمرضى الطب النفسي.
@@ -321,22 +325,26 @@ export function IdeaSlide() {
 
         <motion.div
           variants={stagger} initial="hidden" animate="show"
-          className="grid grid-cols-2 lg:grid-cols-5 gap-4 flex-1"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4 flex-1 min-h-0"
         >
           {points.map((p, i) => (
             <motion.div
               key={i}
               variants={fadeUp} custom={i + 3}
               whileHover={{ y: -8, transition: { duration: 0.3 } }}
-              className="card-3d glass-strong rounded-3xl p-6 flex flex-col relative overflow-hidden group"
+              className="card-3d glass-strong rounded-3xl p-4 md:p-6 flex flex-col relative overflow-hidden group min-h-[150px]"
             >
               <div className="absolute -top-10 -right-10 w-32 h-32 bg-gradient-glow opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="absolute top-4 left-4 text-5xl font-black text-primary/10 group-hover:text-primary/20 transition-colors">
                 0{i + 1}
               </div>
-              <div className="relative w-14 h-14 rounded-2xl bg-gradient-hero flex items-center justify-center mb-4 shadow-glow">
-                <p.Icon className="w-7 h-7 text-white" />
-              </div>
+              <motion.div
+                className="relative w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-gradient-hero flex items-center justify-center mb-3 md:mb-4 shadow-glow"
+                animate={{ y: [0, -6, 0], rotate: [0, i % 2 ? -5 : 5, 0] }}
+                transition={{ duration: 3 + i * 0.2, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <p.Icon className="w-6 h-6 md:w-7 md:h-7 text-white" />
+              </motion.div>
               <h3 className="relative font-bold text-lg text-foreground mb-2">{p.title}</h3>
               <p className="relative text-sm text-muted-foreground leading-relaxed">{p.text}</p>
             </motion.div>
@@ -468,17 +476,17 @@ function DiagramSlide({
   return (
     <div className="relative w-full h-full overflow-hidden noise" style={{ background: "var(--gradient-soft)" }}>
       <Backdrop />
-      <div className="relative z-10 max-w-7xl mx-auto w-full h-full flex flex-col px-8 md:px-12 py-8">
+      <div className="relative z-10 max-w-7xl mx-auto w-full h-full flex flex-col px-4 sm:px-8 md:px-12 py-5 md:py-8 overflow-y-auto">
         <Tag icon={Icon} label={tag} />
         <motion.h2
           variants={fadeUp} initial="hidden" animate="show" custom={1}
-          className="text-3xl md:text-5xl font-black mt-4 mb-2 leading-tight"
+          className="text-2xl sm:text-3xl md:text-5xl font-black mt-3 md:mt-4 mb-2 leading-tight tracking-normal"
         >
           {title} <span className="text-gradient">{highlight}</span>
         </motion.h2>
         <motion.p
           variants={fadeUp} initial="hidden" animate="show" custom={2}
-          className="text-sm md:text-base text-muted-foreground max-w-4xl leading-relaxed mb-4"
+          className="text-xs sm:text-sm md:text-base text-muted-foreground max-w-4xl leading-relaxed mb-3 md:mb-4"
         >
           {intro}
         </motion.p>
@@ -487,9 +495,9 @@ function DiagramSlide({
           initial={{ opacity: 0, y: 30, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] as const }}
-          className="flex-1 min-h-0 perspective-2000"
+          className="flex-1 min-h-[320px] md:min-h-0"
         >
-          <div className="card-3d relative h-full rounded-3xl glass-strong p-4 overflow-hidden group">
+          <div className="relative h-full rounded-3xl glass-strong p-2 sm:p-4 overflow-hidden group">
             {/* corner accents */}
             {[
               "top-3 left-3", "top-3 right-3", "bottom-3 left-3", "bottom-3 right-3"
@@ -504,7 +512,7 @@ function DiagramSlide({
               animate={{ y: ["-10%", "110%"] }}
               transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
             />
-            <div className="relative h-full w-full flex items-center justify-center bg-white/95 rounded-2xl p-6">
+            <div className="relative h-full w-full flex items-center justify-center bg-white/95 rounded-2xl p-2 sm:p-4 md:p-6">
               <ZoomableImage src={image} alt={imageAlt} />
             </div>
           </div>
@@ -555,40 +563,88 @@ export function ERDSlide() {
 
 /* ============================ SLIDE 7: INTERFACES ============================ */
 export function InterfacesSlide() {
+  const [active, setActive] = useState(0);
+  const [hotspot, setHotspot] = useState<number | null>(0);
+  const screens = [
+    { title: "الشاشة الرئيسية", image: coverReference, note: "تجربة دخول واضحة للمنصة", spots: [{ x: 26, y: 24, text: "هوية التطبيق ظاهرة من أول لحظة" }, { x: 72, y: 72, text: "زر بدء سريع وواضح للمستخدم" }] },
+    { title: "هوية التطبيق", image: appIcon, note: "أيقونة النظام الرسمية", spots: [{ x: 50, y: 50, text: "رمز طبي بسيط وسهل التمييز" }] },
+    { title: "الخدمة الطبية", image: stethoscopeIllustration, note: "تمثيل بصري للرعاية الافتراضية", spots: [{ x: 48, y: 32, text: "يركّز على التواصل الطبي عن بُعد" }] },
+  ];
+  const current = screens[active];
+
   return (
     <div className="relative w-full h-full overflow-hidden noise" style={{ background: "var(--gradient-soft)" }}>
       <Backdrop />
-      <div className="relative z-10 max-w-7xl mx-auto w-full h-full flex flex-col px-8 md:px-16 py-12">
+      <div className="relative z-10 max-w-7xl mx-auto w-full h-full flex flex-col px-4 sm:px-8 md:px-16 py-6 md:py-12 overflow-y-auto">
         <Tag icon={LayoutGrid} label="System Interfaces" />
         <Title highlight="النظام">واجهات</Title>
         <motion.p
           variants={fadeUp} initial="hidden" animate="show" custom={2}
-          className="text-base md:text-lg text-muted-foreground max-w-4xl leading-loose mb-8"
+          className="text-sm md:text-lg text-muted-foreground max-w-4xl leading-loose mb-5 md:mb-8"
         >
           تعرض هذه الواجهات الشكل النهائي للنظام، وتوضح كيفية تفاعل المستخدم مع المنصة.
         </motion.p>
 
         <motion.div
-          variants={stagger} initial="hidden" animate="show"
-          className="grid grid-cols-2 md:grid-cols-3 gap-5 flex-1"
+          variants={fadeUp} initial="hidden" animate="show" custom={3}
+          className="grid lg:grid-cols-[1fr_320px] gap-5 flex-1 min-h-[360px]"
         >
-          {[1, 2, 3, 4, 5, 6].map((n, i) => (
-            <motion.div
-              key={n}
-              variants={fadeUp} custom={i + 3}
-              whileHover={{ scale: 1.03, rotateY: 5 }}
-              className="card-3d relative rounded-3xl glass-strong border border-primary/20 flex flex-col items-center justify-center p-6 overflow-hidden group cursor-pointer"
-              style={{ minHeight: 200 }}
-            >
-              <div className="absolute inset-0 bg-gradient-glow opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="absolute top-3 right-3 text-[10px] font-black text-primary/40 tracking-widest">UI / 0{n}</div>
-              <div className="relative w-16 h-16 rounded-2xl bg-gradient-hero flex items-center justify-center mb-4 shadow-glow group-hover:scale-110 transition-transform">
-                <ImageIcon className="w-8 h-8 text-white" />
-              </div>
-              <p className="relative font-bold text-lg text-foreground">واجهة {n}</p>
-              <p className="relative text-xs text-muted-foreground mt-1">أضف الصورة هنا</p>
-            </motion.div>
-          ))}
+          <div className="relative glass-strong rounded-3xl p-3 md:p-5 overflow-hidden min-h-[340px] md:min-h-[430px]">
+            <div className="absolute inset-0 bg-gradient-glow opacity-50" />
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, rotateY: -28, x: 80, scale: 0.92 }}
+                animate={{ opacity: 1, rotateY: 0, x: 0, scale: 1 }}
+                exit={{ opacity: 0, rotateY: 28, x: -80, scale: 0.92 }}
+                transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] as const }}
+                className="relative h-full rounded-2xl bg-white/95 flex items-center justify-center p-4 md:p-8 overflow-hidden"
+              >
+                <img src={current.image} alt={current.title} className="max-w-full max-h-full object-contain" />
+                {current.spots.map((spot, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setHotspot(hotspot === i ? null : i)}
+                    className="absolute w-5 h-5 rounded-full bg-primary shadow-glow border-2 border-primary-foreground"
+                    style={{ left: `${spot.x}%`, top: `${spot.y}%` }}
+                    aria-label={spot.text}
+                  >
+                    <span className="absolute inset-0 rounded-full bg-primary animate-pulse-ring" />
+                  </button>
+                ))}
+                {hotspot !== null && current.spots[hotspot] && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+                    className="absolute bottom-4 right-4 left-4 md:left-auto md:max-w-sm glass-strong rounded-2xl p-4 text-right"
+                  >
+                    <p className="font-bold text-foreground">{current.spots[hotspot].text}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{current.note}</p>
+                  </motion.div>
+                )}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          <div className="grid lg:grid-cols-1 sm:grid-cols-3 gap-3">
+            {screens.map((screen, i) => (
+              <button
+                key={screen.title}
+                onClick={() => { setActive(i); setHotspot(0); }}
+                className={`relative text-right rounded-2xl p-3 glass transition-all overflow-hidden ${i === active ? "shadow-glow" : "hover:bg-primary/10"}`}
+              >
+                {i === active && <motion.div layoutId="interface-active" className="absolute inset-0 bg-gradient-hero opacity-20" />}
+                <div className="relative flex items-center gap-3">
+                  <div className="w-14 h-14 rounded-xl bg-white/95 p-2 flex items-center justify-center shrink-0">
+                    <img src={screen.image} alt="" className="max-w-full max-h-full object-contain" />
+                  </div>
+                  <div>
+                    <p className="font-black text-foreground">{screen.title}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{screen.note}</p>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
         </motion.div>
 
         <motion.p
