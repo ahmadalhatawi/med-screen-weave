@@ -353,110 +353,79 @@ export function IdeaSlide() {
 
 /* ============================ SLIDE 4: TECHNOLOGIES ============================ */
 export function MethodologySlide() {
+  const groups = [
+    {
+      label: "Frontend",
+      title: "تطبيقات المستخدم",
+      Icon: Code2,
+      tone: "primary",
+      items: [
+        { name: "React Native", desc: "تطبيق الهاتف للمرضى والأطباء", logo: reactIcon },
+        { name: "React.js", desc: "لوحة ويب تفاعلية وسريعة", logo: reactIcon },
+      ],
+    },
+    {
+      label: "Backend",
+      title: "إدارة النظام والبيانات",
+      Icon: Database,
+      tone: "gold",
+      items: [{ name: "Firebase", desc: "تسجيل دخول، قاعدة بيانات، وتخزين سحابي", logo: firebaseIcon }],
+    },
+    {
+      label: "Video System",
+      title: "الاستشارات المرئية",
+      Icon: Video,
+      tone: "mint",
+      items: [{ name: "Agora", desc: "مكالمات فيديو مباشرة وآمنة داخل المنصة" }],
+    },
+  ];
+
   return (
     <div className="relative w-full h-full overflow-hidden noise" style={{ background: "var(--gradient-soft)" }}>
       <Backdrop />
-      <div className="relative z-10 max-w-7xl mx-auto w-full h-full flex flex-col px-8 md:px-16 py-12">
+      <div className="relative z-10 max-w-7xl mx-auto w-full h-full flex flex-col px-4 sm:px-8 md:px-16 py-6 md:py-12 overflow-y-auto">
         <Tag icon={Code2} label="Tech Stack" />
         <Title highlight="التقنيات المستخدمة">البرامج و</Title>
 
         <motion.p
           variants={fadeUp} initial="hidden" animate="show" custom={2}
-          className="text-base md:text-lg text-muted-foreground max-w-3xl mb-10 leading-loose"
+          className="text-sm md:text-lg text-muted-foreground max-w-3xl mb-5 md:mb-8 leading-loose"
         >
-          اعتمدنا على مجموعة من أحدث التقنيات لضمان أداء عالٍ وتجربة مستخدم متميزة.
+          اعتمدنا على بنية تقنية واضحة تجمع بين تطبيقات المستخدم، إدارة البيانات، ونظام فيديو مباشر للاستشارات الطبية.
         </motion.p>
 
-        <div className="grid lg:grid-cols-2 gap-6 flex-1">
-          {/* Frontend */}
-          <motion.div
-            initial={{ opacity: 0, x: 60, rotateY: -10 }}
-            animate={{ opacity: 1, x: 0, rotateY: 0 }}
-            transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] as const }}
-            whileHover={{ y: -6 }}
-            className="card-3d glass-strong rounded-3xl p-8 relative overflow-hidden"
-          >
-            <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full bg-primary/20 blur-3xl" />
-            <div className="relative flex items-center gap-5 mb-6">
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="w-20 h-20 rounded-2xl glass-light flex items-center justify-center p-3"
-              >
-                <img src={reactIcon} alt="React" className="w-full h-full object-contain" />
-              </motion.div>
-              <div>
-                <p className="text-xs font-black text-cyan tracking-[0.2em] mb-1" style={{ color: "var(--color-cyan)" }}>FRONTEND</p>
-                <h3 className="text-3xl font-black text-foreground">واجهة المستخدم</h3>
-              </div>
-            </div>
-            <div className="relative space-y-3 mb-6">
-              {[
-                { name: "React Native", desc: "لتطوير تطبيق الهاتف" },
-                { name: "React.js", desc: "لتطوير موقع الويب" },
-              ].map((t) => (
-                <div key={t.name} className="flex items-start gap-3 glass rounded-xl p-3">
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5" />
-                  <div>
-                    <p className="font-bold text-foreground">{t.name}</p>
-                    <p className="text-sm text-muted-foreground">{t.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <p className="relative text-sm font-bold text-cyan mb-3 tracking-wider" style={{ color: "var(--color-cyan)" }}>المزايا</p>
-            <ul className="relative space-y-2 text-sm text-muted-foreground">
-              {["تجربة مستخدم سلسة وسريعة", "كفاءة عالية على مختلف الأجهزة", "تصميم موحّد وسهل الاستخدام"].map((t) => (
-                <li key={t} className="flex items-center gap-2">
-                  <span className="w-4 h-4 rounded-full bg-primary/20 flex items-center justify-center text-primary text-[10px]">✓</span>
-                  {t}
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-
-          {/* Backend */}
-          <motion.div
-            initial={{ opacity: 0, x: -60, rotateY: 10 }}
-            animate={{ opacity: 1, x: 0, rotateY: 0 }}
-            transition={{ duration: 0.9, delay: 0.45, ease: [0.22, 1, 0.36, 1] as const }}
-            whileHover={{ y: -6 }}
-            className="card-3d glass-strong rounded-3xl p-8 relative overflow-hidden"
-          >
-            <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full blur-3xl" style={{ background: "oklch(0.82 0.14 85 / 0.2)" }} />
-            <div className="relative flex items-center gap-5 mb-6">
-              <motion.div
-                animate={{ scale: [1, 1.05, 1] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                className="w-20 h-20 rounded-2xl glass-light flex items-center justify-center p-3"
-              >
-                <img src={firebaseIcon} alt="Firebase" className="w-full h-full object-contain" />
-              </motion.div>
-              <div>
-                <p className="text-xs font-black tracking-[0.2em] mb-1" style={{ color: "var(--color-gold)" }}>BACKEND</p>
-                <h3 className="text-3xl font-black text-foreground">إدارة النظام</h3>
-              </div>
-            </div>
-            <div className="relative mb-6">
-              <div className="flex items-start gap-3 glass rounded-xl p-3">
-                <div className="w-1.5 h-1.5 rounded-full mt-2.5" style={{ background: "var(--color-gold)" }} />
+        <motion.div variants={stagger} initial="hidden" animate="show" className="grid lg:grid-cols-3 gap-4 md:gap-6 flex-1 min-h-0">
+          {groups.map((group, i) => (
+            <motion.div key={group.label} variants={fadeUp} custom={i + 3} whileHover={{ y: -6 }} className="card-3d glass-strong rounded-3xl p-5 md:p-7 relative overflow-hidden flex flex-col">
+              <div className="absolute inset-x-8 -top-24 h-52 rounded-full bg-gradient-glow blur-3xl opacity-70" />
+              <div className="relative flex items-center gap-4 mb-5">
+                <motion.div animate={{ y: [0, -7, 0], scale: [1, 1.04, 1] }} transition={{ duration: 3.5, repeat: Infinity, delay: i * 0.25, ease: "easeInOut" }} className="w-16 h-16 md:w-20 md:h-20 rounded-2xl glass-light flex items-center justify-center p-3 shadow-soft">
+                  {group.items[0].logo ? <img src={group.items[0].logo} alt={group.items[0].name} className="w-full h-full object-contain" /> : <group.Icon className="w-9 h-9 text-primary" />}
+                </motion.div>
                 <div>
-                  <p className="font-bold text-foreground">Firebase</p>
-                  <p className="text-sm text-muted-foreground">منصة سحابية متكاملة لإدارة النظام</p>
+                  <p className="text-[10px] md:text-xs font-black tracking-[0.2em] mb-1 text-primary">{group.label}</p>
+                  <h3 className="text-xl md:text-2xl font-black text-foreground leading-tight">{group.title}</h3>
                 </div>
               </div>
-            </div>
-            <p className="relative text-sm font-bold mb-3 tracking-wider" style={{ color: "var(--color-gold)" }}>المزايا</p>
-            <ul className="relative space-y-2 text-sm text-muted-foreground">
-              {["إدارة المستخدمين وتسجيل الدخول بأمان", "تخزين البيانات بشكل فوري وآمن", "ضمان الاستقرار وقابلية التوسع"].map((t) => (
-                <li key={t} className="flex items-center gap-2">
-                  <span className="w-4 h-4 rounded-full flex items-center justify-center text-[10px]" style={{ background: "oklch(0.82 0.14 85 / 0.2)", color: "var(--color-gold)" }}>✓</span>
-                  {t}
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        </div>
+              <div className="relative space-y-3 flex-1">
+                {group.items.map((t) => (
+                  <div key={t.name} className="flex items-start gap-3 glass rounded-2xl p-3 md:p-4">
+                    <div className="w-2 h-2 rounded-full bg-primary mt-2.5 shrink-0" />
+                    <div>
+                      <p className="font-black text-foreground">{t.name}</p>
+                      <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">{t.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="relative mt-5 pt-4 border-t border-border/50 text-xs md:text-sm text-muted-foreground leading-relaxed">
+                {i === 0 && "واجهة موحدة وسريعة على الهاتف والويب."}
+                {i === 1 && "بنية موثوقة للبيانات والمستخدمين."}
+                {i === 2 && "اتصال مرئي فوري يدعم تجربة الاستشارة عن بُعد."}
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
     </div>
   );
