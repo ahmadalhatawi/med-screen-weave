@@ -46,10 +46,14 @@ export default function Presentation() {
   const smoothY = useSpring(pointerY, { stiffness: 80, damping: 22 });
   const rotateY = useTransform(smoothX, [-0.5, 0.5], [4, -4]);
   const rotateX = useTransform(smoothY, [-0.5, 0.5], [-3, 3]);
-  const [theme, setTheme] = useState<"dark" | "light">(() => {
-    if (typeof window === "undefined") return "dark";
-    return (localStorage.getItem("theme") as "dark" | "light") || "dark";
-  });
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "light" || savedTheme === "dark") {
+      setTheme(savedTheme);
+    }
+  }, []);
 
   useEffect(() => {
     const root = document.documentElement;
