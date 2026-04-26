@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Stethoscope, HeartPulse, Activity, Brain, Video,
   Users, Database, LayoutGrid, Code2, Workflow,
@@ -11,6 +12,9 @@ import reactIcon from "@/assets/react-icon.png";
 import firebaseIcon from "@/assets/firebase-icon.png";
 import useCaseDiagram from "@/assets/usecase-diagram.png";
 import databaseDiagram from "@/assets/database-diagram.png";
+import coverReference from "@/assets/cover-reference.png";
+import appIcon from "@/assets/app-icon.png";
+import stethoscopeIllustration from "@/assets/stethoscope-illustration.png";
 import Backdrop from "./Backdrop";
 import ZoomableImage from "./ZoomableImage";
 
@@ -52,7 +56,7 @@ function Title({ children, highlight }: { children: React.ReactNode; highlight?:
     <motion.h2
       variants={fadeUp}
       initial="hidden" animate="show" custom={1}
-      className="text-5xl md:text-7xl font-black mt-6 mb-4 leading-[1.1] tracking-tight"
+      className="text-3xl sm:text-4xl md:text-6xl xl:text-7xl font-black mt-4 md:mt-6 mb-3 md:mb-4 leading-[1.12] tracking-normal"
     >
       {children}{" "}
       {highlight && <span className="text-gradient">{highlight}</span>}
