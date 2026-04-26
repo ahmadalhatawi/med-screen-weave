@@ -99,15 +99,14 @@ export function CoverSlide() {
       </motion.div>
 
       {/* Main content grid */}
-      <div className="relative z-10 h-full flex items-center justify-center px-8 md:px-20">
-        <div className="grid lg:grid-cols-[1fr_auto] gap-12 lg:gap-20 items-center max-w-7xl w-full">
+      <div className="relative z-10 h-full flex items-center justify-center px-4 sm:px-8 md:px-20 pt-24 pb-8 md:py-12">
+        <div className="grid lg:grid-cols-[1fr_auto] gap-8 lg:gap-20 items-center max-w-7xl w-full">
           {/* Text */}
           <div className="text-center lg:text-right">
             <motion.p
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-2xl md:text-3xl font-bold text-foreground/80 mb-6"
-              style={{ fontFamily: "'Amiri', 'Cairo', serif" }}
+              className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground/80 mb-4 md:mb-6 font-quran"
             >
               بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
             </motion.p>
@@ -126,7 +125,8 @@ export function CoverSlide() {
             <motion.h1
               initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.4, ease: [0.22, 1, 0.36, 1] as const }}
-              className="text-5xl md:text-7xl lg:text-8xl font-black leading-[1.05] tracking-tight mb-4"
+              layoutId="main-title"
+              className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[1.08] tracking-normal mb-4"
             >
               منصّة الرعاية
               <br />
@@ -136,7 +136,7 @@ export function CoverSlide() {
             <motion.p
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.7 }}
-              className="text-lg md:text-xl text-muted-foreground max-w-xl mb-8 lg:mr-0 lg:ml-auto"
+              className="text-base md:text-xl text-muted-foreground max-w-xl mb-5 md:mb-8 lg:mr-0 lg:ml-auto leading-relaxed"
             >
               نظام متكامل للاستشارات الطبية عن بُعد يربط الأطباء والمرضى عبر تجربة رقمية سلسة وآمنة.
             </motion.p>
