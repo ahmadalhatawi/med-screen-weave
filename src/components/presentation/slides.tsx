@@ -563,40 +563,88 @@ export function ERDSlide() {
 
 /* ============================ SLIDE 7: INTERFACES ============================ */
 export function InterfacesSlide() {
+  const [active, setActive] = useState(0);
+  const [hotspot, setHotspot] = useState<number | null>(0);
+  const screens = [
+    { title: "الشاشة الرئيسية", image: coverReference, note: "تجربة دخول واضحة للمنصة", spots: [{ x: 26, y: 24, text: "هوية التطبيق ظاهرة من أول لحظة" }, { x: 72, y: 72, text: "زر بدء سريع وواضح للمستخدم" }] },
+    { title: "هوية التطبيق", image: appIcon, note: "أيقونة النظام الرسمية", spots: [{ x: 50, y: 50, text: "رمز طبي بسيط وسهل التمييز" }] },
+    { title: "الخدمة الطبية", image: stethoscopeIllustration, note: "تمثيل بصري للرعاية الافتراضية", spots: [{ x: 48, y: 32, text: "يركّز على التواصل الطبي عن بُعد" }] },
+  ];
+  const current = screens[active];
+
   return (
     <div className="relative w-full h-full overflow-hidden noise" style={{ background: "var(--gradient-soft)" }}>
       <Backdrop />
-      <div className="relative z-10 max-w-7xl mx-auto w-full h-full flex flex-col px-8 md:px-16 py-12">
+      <div className="relative z-10 max-w-7xl mx-auto w-full h-full flex flex-col px-4 sm:px-8 md:px-16 py-6 md:py-12 overflow-y-auto">
         <Tag icon={LayoutGrid} label="System Interfaces" />
         <Title highlight="النظام">واجهات</Title>
         <motion.p
           variants={fadeUp} initial="hidden" animate="show" custom={2}
-          className="text-base md:text-lg text-muted-foreground max-w-4xl leading-loose mb-8"
+          className="text-sm md:text-lg text-muted-foreground max-w-4xl leading-loose mb-5 md:mb-8"
         >
           تعرض هذه الواجهات الشكل النهائي للنظام، وتوضح كيفية تفاعل المستخدم مع المنصة.
         </motion.p>
 
         <motion.div
-          variants={stagger} initial="hidden" animate="show"
-          className="grid grid-cols-2 md:grid-cols-3 gap-5 flex-1"
+          variants={fadeUp} initial="hidden" animate="show" custom={3}
+          className="grid lg:grid-cols-[1fr_320px] gap-5 flex-1 min-h-[360px]"
         >
-          {[1, 2, 3, 4, 5, 6].map((n, i) => (
-            <motion.div
-              key={n}
-              variants={fadeUp} custom={i + 3}
-              whileHover={{ scale: 1.03, rotateY: 5 }}
-              className="card-3d relative rounded-3xl glass-strong border border-primary/20 flex flex-col items-center justify-center p-6 overflow-hidden group cursor-pointer"
-              style={{ minHeight: 200 }}
-            >
-              <div className="absolute inset-0 bg-gradient-glow opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="absolute top-3 right-3 text-[10px] font-black text-primary/40 tracking-widest">UI / 0{n}</div>
-              <div className="relative w-16 h-16 rounded-2xl bg-gradient-hero flex items-center justify-center mb-4 shadow-glow group-hover:scale-110 transition-transform">
-                <ImageIcon className="w-8 h-8 text-white" />
-              </div>
-              <p className="relative font-bold text-lg text-foreground">واجهة {n}</p>
-              <p className="relative text-xs text-muted-foreground mt-1">أضف الصورة هنا</p>
-            </motion.div>
-          ))}
+          <div className="relative glass-strong rounded-3xl p-3 md:p-5 overflow-hidden min-h-[340px] md:min-h-[430px]">
+            <div className="absolute inset-0 bg-gradient-glow opacity-50" />
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, rotateY: -28, x: 80, scale: 0.92 }}
+                animate={{ opacity: 1, rotateY: 0, x: 0, scale: 1 }}
+                exit={{ opacity: 0, rotateY: 28, x: -80, scale: 0.92 }}
+                transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] as const }}
+                className="relative h-full rounded-2xl bg-white/95 flex items-center justify-center p-4 md:p-8 overflow-hidden"
+              >
+                <img src={current.image} alt={current.title} className="max-w-full max-h-full object-contain" />
+                {current.spots.map((spot, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setHotspot(hotspot === i ? null : i)}
+                    className="absolute w-5 h-5 rounded-full bg-primary shadow-glow border-2 border-primary-foreground"
+                    style={{ left: `${spot.x}%`, top: `${spot.y}%` }}
+                    aria-label={spot.text}
+                  >
+                    <span className="absolute inset-0 rounded-full bg-primary animate-pulse-ring" />
+                  </button>
+                ))}
+                {hotspot !== null && current.spots[hotspot] && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+                    className="absolute bottom-4 right-4 left-4 md:left-auto md:max-w-sm glass-strong rounded-2xl p-4 text-right"
+                  >
+                    <p className="font-bold text-foreground">{current.spots[hotspot].text}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{current.note}</p>
+                  </motion.div>
+                )}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          <div className="grid lg:grid-cols-1 sm:grid-cols-3 gap-3">
+            {screens.map((screen, i) => (
+              <button
+                key={screen.title}
+                onClick={() => { setActive(i); setHotspot(0); }}
+                className={`relative text-right rounded-2xl p-3 glass transition-all overflow-hidden ${i === active ? "shadow-glow" : "hover:bg-primary/10"}`}
+              >
+                {i === active && <motion.div layoutId="interface-active" className="absolute inset-0 bg-gradient-hero opacity-20" />}
+                <div className="relative flex items-center gap-3">
+                  <div className="w-14 h-14 rounded-xl bg-white/95 p-2 flex items-center justify-center shrink-0">
+                    <img src={screen.image} alt="" className="max-w-full max-h-full object-contain" />
+                  </div>
+                  <div>
+                    <p className="font-black text-foreground">{screen.title}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{screen.note}</p>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
         </motion.div>
 
         <motion.p
