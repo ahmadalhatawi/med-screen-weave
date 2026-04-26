@@ -376,7 +376,7 @@ export function MethodologySlide() {
       title: "الاستشارات المرئية",
       Icon: Video,
       tone: "mint",
-      items: [{ name: "Agora", desc: "مكالمات فيديو مباشرة وآمنة داخل المنصة" }],
+      items: [{ name: "Agora", desc: "مكالمات فيديو مباشرة وآمنة داخل المنصة", logo: undefined }],
     },
   ];
 
