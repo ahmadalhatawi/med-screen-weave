@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   Stethoscope, HeartPulse, Activity, Brain, Video,
   Users, Database, LayoutGrid, Code2, Workflow,
@@ -12,9 +11,6 @@ import reactIcon from "@/assets/react-icon.png";
 import firebaseIcon from "@/assets/firebase-icon.png";
 import useCaseDiagram from "@/assets/usecase-diagram.png";
 import databaseDiagram from "@/assets/database-diagram.png";
-import coverReference from "@/assets/cover-reference.png";
-import appIcon from "@/assets/app-icon.png";
-import stethoscopeIllustration from "@/assets/stethoscope-illustration.png";
 import Backdrop from "./Backdrop";
 import ZoomableImage from "./ZoomableImage";
 
