@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ChevronLeft, ChevronRight, HeartPulse, Menu, X, Maximize2, Grid3x3, Sun, Moon } from "lucide-react";
 import {
   CoverSlide, IntroductionSlide, IdeaSlide, MethodologySlide,
@@ -40,6 +40,12 @@ export default function Presentation() {
   const [[index, dir], setState] = useState<[number, number]>([0, 0]);
   const [menuOpen, setMenuOpen] = useState(false);
   const [gridOpen, setGridOpen] = useState(false);
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+  const smoothX = useSpring(pointerX, { stiffness: 80, damping: 22 });
+  const smoothY = useSpring(pointerY, { stiffness: 80, damping: 22 });
+  const rotateY = useTransform(smoothX, [-0.5, 0.5], [4, -4]);
+  const rotateX = useTransform(smoothY, [-0.5, 0.5], [-3, 3]);
   const [theme, setTheme] = useState<"dark" | "light">(() => {
     if (typeof window === "undefined") return "dark";
     return (localStorage.getItem("theme") as "dark" | "light") || "dark";
@@ -82,6 +88,7 @@ export default function Presentation() {
 
   const Current = SLIDES[index].component;
   const progress = ((index + 1) / SLIDES.length) * 100;
+  const imageFocusedSlide = SLIDES[index].id === "usecase" || SLIDES[index].id === "erd";
 
   return (
     <div dir="rtl" className="fixed inset-0 bg-background overflow-hidden flex flex-col font-body">
@@ -213,7 +220,17 @@ export default function Presentation() {
       </AnimatePresence>
 
       {/* Slide stage */}
-      <main className="relative flex-1 overflow-hidden perspective-2000">
+      <main
+        className="relative flex-1 overflow-hidden perspective-2000"
+        onPointerMove={(event) => {
+          pointerX.set(event.clientX / window.innerWidth - 0.5);
+          pointerY.set(event.clientY / window.innerHeight - 0.5);
+        }}
+        onPointerLeave={() => {
+          pointerX.set(0);
+          pointerY.set(0);
+        }}
+      >
         <AnimatePresence mode="wait" custom={dir}>
           <motion.div
             key={index}
@@ -222,6 +239,7 @@ export default function Presentation() {
             initial="enter"
             animate="center"
             exit="exit"
+            style={imageFocusedSlide ? undefined : { rotateX, rotateY }}
             className="absolute inset-0 preserve-3d"
           >
             <Current />
