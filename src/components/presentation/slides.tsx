@@ -498,16 +498,35 @@ function DiagramSlide({
 
 export function UseCaseSlide() {
   return (
-    <DiagramSlide
-      tag="Use Case Diagram"
-      icon={Users}
-      title="مخطط حالات الاستخدام"
-      highlight="Use Case"
-      intro="يوضح هذا المخطط كيفية تفاعل المستخدمين مع النظام، حيث يعرض الأدوار المختلفة (مريض، طبيب، مختبر، مدير النظام) والوظائف التي يمكن لكل مستخدم تنفيذها داخل المنصة."
-      image={useCaseDiagram}
-      imageAlt="Use Case Diagram"
-      caption="الشكل (1): مخطط حالات الاستخدام للنظام"
-    />
+    <div className="relative w-full h-full overflow-hidden noise" style={{ background: "var(--gradient-soft)" }}>
+      <Backdrop />
+      <div className="relative z-10 max-w-7xl mx-auto w-full h-full grid lg:grid-cols-[0.82fr_1.18fr] gap-4 md:gap-8 px-4 sm:px-8 md:px-12 py-5 md:py-8 overflow-y-auto items-center">
+        <motion.div variants={stagger} initial="hidden" animate="show" className="space-y-4 md:space-y-6">
+          <Tag icon={Users} label="Use Case Diagram" />
+          <motion.h2 variants={fadeUp} custom={1} className="text-3xl sm:text-4xl md:text-6xl font-black leading-tight tracking-normal">
+            مخطط حالات الاستخدام <span className="text-gradient">Use Case</span>
+          </motion.h2>
+          <motion.p variants={fadeUp} custom={2} className="text-sm md:text-lg text-muted-foreground leading-loose">
+            يوضح هذا المخطط كيفية تفاعل المستخدمين مع النظام، حيث يعرض الأدوار المختلفة والوظائف التي يمكن لكل مستخدم تنفيذها داخل المنصة.
+          </motion.p>
+          <motion.div variants={fadeUp} custom={3} className="grid sm:grid-cols-2 gap-3">
+            {["المريض", "الطبيب", "المختبر", "مدير النظام"].map((role) => (
+              <div key={role} className="glass rounded-2xl p-4 flex items-center gap-3">
+                <span className="w-2 h-2 rounded-full bg-primary shadow-glow" />
+                <span className="font-bold text-foreground">{role}</span>
+              </div>
+            ))}
+          </motion.div>
+          <motion.p variants={fadeUp} custom={4} className="text-xs md:text-sm text-muted-foreground italic">
+            الشكل (1): مخطط حالات الاستخدام للنظام
+          </motion.p>
+        </motion.div>
+
+        <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] as const }} className="min-h-[520px] md:min-h-[640px] lg:h-[calc(100vh-150px)] flex items-center justify-center">
+          <ZoomableImage src={useCaseDiagram} alt="Use Case Diagram" className="w-full h-full" />
+        </motion.div>
+      </div>
+    </div>
   );
 }
 
@@ -528,96 +547,15 @@ export function ERDSlide() {
 
 /* ============================ SLIDE 7: INTERFACES ============================ */
 export function InterfacesSlide() {
-  const [active, setActive] = useState(0);
-  const [hotspot, setHotspot] = useState<number | null>(0);
-  const screens = [
-    { title: "الشاشة الرئيسية", image: coverReference, note: "تجربة دخول واضحة للمنصة", spots: [{ x: 26, y: 24, text: "هوية التطبيق ظاهرة من أول لحظة" }, { x: 72, y: 72, text: "زر بدء سريع وواضح للمستخدم" }] },
-    { title: "هوية التطبيق", image: appIcon, note: "أيقونة النظام الرسمية", spots: [{ x: 50, y: 50, text: "رمز طبي بسيط وسهل التمييز" }] },
-    { title: "الخدمة الطبية", image: stethoscopeIllustration, note: "تمثيل بصري للرعاية الافتراضية", spots: [{ x: 48, y: 32, text: "يركّز على التواصل الطبي عن بُعد" }] },
-  ];
-  const current = screens[active];
-
   return (
     <div className="relative w-full h-full overflow-hidden noise" style={{ background: "var(--gradient-soft)" }}>
       <Backdrop />
-      <div className="relative z-10 max-w-7xl mx-auto w-full h-full flex flex-col px-4 sm:px-8 md:px-16 py-6 md:py-12 overflow-y-auto">
-        <Tag icon={LayoutGrid} label="System Interfaces" />
-        <Title highlight="النظام">واجهات</Title>
-        <motion.p
-          variants={fadeUp} initial="hidden" animate="show" custom={2}
-          className="text-sm md:text-lg text-muted-foreground max-w-4xl leading-loose mb-5 md:mb-8"
-        >
-          تعرض هذه الواجهات الشكل النهائي للنظام، وتوضح كيفية تفاعل المستخدم مع المنصة.
-        </motion.p>
-
-        <motion.div
-          variants={fadeUp} initial="hidden" animate="show" custom={3}
-          className="grid lg:grid-cols-[1fr_320px] gap-5 flex-1 min-h-[360px]"
-        >
-          <div className="relative glass-strong rounded-3xl p-3 md:p-5 overflow-hidden min-h-[340px] md:min-h-[430px]">
-            <div className="absolute inset-0 bg-gradient-glow opacity-50" />
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={active}
-                initial={{ opacity: 0, rotateY: -28, x: 80, scale: 0.92 }}
-                animate={{ opacity: 1, rotateY: 0, x: 0, scale: 1 }}
-                exit={{ opacity: 0, rotateY: 28, x: -80, scale: 0.92 }}
-                transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] as const }}
-                className="relative h-full rounded-2xl bg-white/95 flex items-center justify-center p-4 md:p-8 overflow-hidden"
-              >
-                <img src={current.image} alt={current.title} className="max-w-full max-h-full object-contain" />
-                {current.spots.map((spot, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setHotspot(hotspot === i ? null : i)}
-                    className="absolute w-5 h-5 rounded-full bg-primary shadow-glow border-2 border-primary-foreground"
-                    style={{ left: `${spot.x}%`, top: `${spot.y}%` }}
-                    aria-label={spot.text}
-                  >
-                    <span className="absolute inset-0 rounded-full bg-primary animate-pulse-ring" />
-                  </button>
-                ))}
-                {hotspot !== null && current.spots[hotspot] && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-                    className="absolute bottom-4 right-4 left-4 md:left-auto md:max-w-sm glass-strong rounded-2xl p-4 text-right"
-                  >
-                    <p className="font-bold text-foreground">{current.spots[hotspot].text}</p>
-                    <p className="text-xs text-muted-foreground mt-1">{current.note}</p>
-                  </motion.div>
-                )}
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          <div className="grid lg:grid-cols-1 sm:grid-cols-3 gap-3">
-            {screens.map((screen, i) => (
-              <button
-                key={screen.title}
-                onClick={() => { setActive(i); setHotspot(0); }}
-                className={`relative text-right rounded-2xl p-3 glass transition-all overflow-hidden ${i === active ? "shadow-glow" : "hover:bg-primary/10"}`}
-              >
-                {i === active && <motion.div layoutId="interface-active" className="absolute inset-0 bg-gradient-hero opacity-20" />}
-                <div className="relative flex items-center gap-3">
-                  <div className="w-14 h-14 rounded-xl bg-white/95 p-2 flex items-center justify-center shrink-0">
-                    <img src={screen.image} alt="" className="max-w-full max-h-full object-contain" />
-                  </div>
-                  <div>
-                    <p className="font-black text-foreground">{screen.title}</p>
-                    <p className="text-xs text-muted-foreground mt-1">{screen.note}</p>
-                  </div>
-                </div>
-              </button>
-            ))}
-          </div>
-        </motion.div>
-
-        <motion.p
-          variants={fadeUp} initial="hidden" animate="show" custom={10}
-          className="text-center text-sm text-muted-foreground mt-6 italic"
-        >
-          الشكل (3): الواجهات الرئيسية لمنصّة الرعاية الطبية الافتراضية
-        </motion.p>
+      <div className="relative z-10 max-w-5xl mx-auto w-full h-full flex flex-col items-center justify-center text-center px-6 py-10">
+        <Tag icon={LayoutGrid} label="Live Demo" />
+        <motion.h2 initial={{ opacity: 0, y: 35 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }} className="text-4xl sm:text-6xl md:text-8xl font-black leading-tight tracking-normal mt-6">
+          سنبدأ الآن <span className="text-gradient">العرض العملي</span>
+        </motion.h2>
+        <motion.div initial={{ scaleX: 0, opacity: 0 }} animate={{ scaleX: 1, opacity: 1 }} transition={{ duration: 0.9, delay: 0.35 }} className="w-36 md:w-56 h-1 bg-gradient-hero rounded-full mt-8 shadow-glow" />
       </div>
     </div>
   );
