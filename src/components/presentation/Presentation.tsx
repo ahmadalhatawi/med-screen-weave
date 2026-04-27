@@ -47,6 +47,7 @@ export default function Presentation() {
   const rotateY = useTransform(smoothX, [-0.5, 0.5], [4, -4]);
   const rotateX = useTransform(smoothY, [-0.5, 0.5], [-3, 3]);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -63,6 +64,10 @@ export default function Presentation() {
   }, [theme]);
 
   const toggleTheme = useCallback(() => setTheme((t) => (t === "dark" ? "light" : "dark")), []);
+  const toggleFullscreen = useCallback(() => {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else document.documentElement.requestFullscreen();
+  }, []);
 
   const go = useCallback((next: number) => {
     if (next < 0 || next >= SLIDES.length) return;
@@ -80,15 +85,18 @@ export default function Presentation() {
       else if (e.key === "End") go(SLIDES.length - 1);
       else if (e.key === "g" || e.key === "G") setGridOpen((g) => !g);
       else if (e.key === "Escape") setGridOpen(false);
-      else if (e.key === "f" || e.key === "F") {
-        if (document.fullscreenElement) document.exitFullscreen();
-        else document.documentElement.requestFullscreen();
-      }
+      else if (e.key === "f" || e.key === "F") toggleFullscreen();
       else if (e.key === "t" || e.key === "T") toggleTheme();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [next, prev, go, toggleTheme]);
+  }, [next, prev, go, toggleTheme, toggleFullscreen]);
+
+  useEffect(() => {
+    const onFullscreenChange = () => setIsFullscreen(Boolean(document.fullscreenElement));
+    document.addEventListener("fullscreenchange", onFullscreenChange);
+    return () => document.removeEventListener("fullscreenchange", onFullscreenChange);
+  }, []);
 
   const Current = SLIDES[index].component;
   const progress = ((index + 1) / SLIDES.length) * 100;
@@ -106,7 +114,7 @@ export default function Presentation() {
       />
 
       {/* Top nav */}
-      <header className="relative z-30 flex items-center justify-between gap-3 px-3 sm:px-4 md:px-8 py-3 md:py-4 glass-strong border-b border-white/5">
+      <header className={`relative z-30 items-center justify-between gap-3 px-3 sm:px-4 md:px-8 py-3 md:py-4 glass-strong border-b border-white/5 ${isFullscreen ? "hidden" : "flex"}`}>
         <div className="flex items-center gap-3">
           <motion.div
             whileHover={{ scale: 1.1, rotate: 10 }}
@@ -178,10 +186,7 @@ export default function Presentation() {
             </AnimatePresence>
           </motion.button>
           <button
-            onClick={() => {
-              if (document.fullscreenElement) document.exitFullscreen();
-              else document.documentElement.requestFullscreen();
-            }}
+            onClick={toggleFullscreen}
             className="hidden sm:flex w-10 h-10 rounded-xl glass hover:bg-primary/20 items-center justify-center text-primary transition-colors"
             aria-label="ملء الشاشة"
             title="ملء الشاشة (F)"
@@ -200,7 +205,7 @@ export default function Presentation() {
 
       {/* Mobile drawer */}
       <AnimatePresence>
-        {menuOpen && (
+        {menuOpen && !isFullscreen && (
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -275,7 +280,7 @@ export default function Presentation() {
       </main>
 
       {/* Bottom dots */}
-      <footer className="relative z-30 px-4 md:px-8 py-3 md:py-4 glass-strong border-t border-white/5">
+      <footer className={`relative z-30 px-4 md:px-8 py-3 md:py-4 glass-strong border-t border-white/5 ${isFullscreen ? "hidden" : "block"}`}>
         <div className="flex items-center justify-center gap-2">
           {SLIDES.map((s, i) => (
             <button
