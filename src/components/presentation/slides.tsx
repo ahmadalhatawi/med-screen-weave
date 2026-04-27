@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import {
-  Stethoscope, HeartPulse, Activity, Brain, Video,
+  HeartPulse, Brain, Video,
   Users, Database, LayoutGrid, Code2, Workflow,
   MapPin, FileHeart, Sparkles, ArrowUpRight,
   Zap, Shield, Globe2,
