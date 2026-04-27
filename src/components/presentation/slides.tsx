@@ -84,18 +84,8 @@ export function CoverSlide() {
         </div>
       </motion.div>
 
-      {/* Year badge top left */}
-      <motion.div
-        initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="absolute top-8 left-8 md:top-12 md:left-12 z-20 glass-strong rounded-2xl px-5 py-3"
-      >
-        <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Academic Year</p>
-        <p className="text-lg font-black text-gradient">2025 — 2026</p>
-      </motion.div>
-
       {/* Main content grid */}
-      <div className="relative z-10 h-full flex items-center justify-center px-4 sm:px-8 md:px-20 pt-24 pb-8 md:py-12">
+      <div className="relative z-10 h-full flex items-center justify-center px-4 sm:px-8 md:px-20 pt-24 pb-24 md:py-16">
         <div className="grid lg:grid-cols-[1fr_auto] gap-8 lg:gap-20 items-center max-w-7xl w-full">
           {/* Text */}
           <div className="text-center lg:text-right">
@@ -137,30 +127,29 @@ export function CoverSlide() {
               نظام متكامل للاستشارات الطبية عن بُعد يربط الأطباء والمرضى عبر تجربة رقمية سلسة وآمنة.
             </motion.p>
 
-            {/* Supervisor */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.85 }}
-              className="inline-flex items-center gap-3 glass rounded-2xl px-5 py-3 mb-6"
-            >
-              <div className="w-2 h-2 rounded-full bg-cyan" style={{ background: "var(--color-cyan)" }} />
-              <p className="text-sm text-muted-foreground">إشراف</p>
-              <p className="text-base font-bold text-foreground">د. نبيل حساسنة</p>
-            </motion.div>
-
-            {/* Team */}
             <motion.div
               variants={stagger} initial="hidden" animate="show"
-              className="flex flex-wrap gap-2 justify-center lg:justify-end"
+              className="grid sm:grid-cols-2 gap-3 max-w-2xl mx-auto lg:mx-0 lg:mr-0 lg:ml-auto"
             >
-              {team.map((name, i) => (
-                <motion.div
-                  key={name} variants={fadeUp} custom={i + 9}
-                  className="glass rounded-xl px-4 py-2 text-sm font-semibold text-foreground/90 border border-primary/10 hover:border-primary/40 hover:scale-105 transition-all"
-                >
-                  {name}
-                </motion.div>
-              ))}
+              <motion.div variants={fadeUp} custom={9} className="glass rounded-2xl px-5 py-4 text-right border border-primary/10">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-2 h-2 rounded-full" style={{ background: "var(--color-cyan)" }} />
+                  <p className="text-sm text-muted-foreground">إشراف</p>
+                </div>
+                <p className="text-lg font-black text-foreground">د. نبيل حساسنة</p>
+              </motion.div>
+
+              <motion.div variants={fadeUp} custom={10} className="glass rounded-2xl px-5 py-4 text-right border border-primary/10">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-2 h-2 rounded-full bg-primary" />
+                  <p className="text-sm text-muted-foreground">إعداد الطلبة</p>
+                </div>
+                <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+                  {team.map((name) => (
+                    <p key={name} className="text-sm font-bold text-foreground/90 whitespace-nowrap">{name}</p>
+                  ))}
+                </div>
+              </motion.div>
             </motion.div>
           </div>
 
