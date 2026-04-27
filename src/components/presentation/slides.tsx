@@ -195,30 +195,19 @@ export function CoverSlide() {
                 <img src={teleLogo} alt="TeleMEDICINE" className="w-44 h-44 object-contain drop-shadow-2xl" />
               </motion.div>
 
-              {/* Floating mini icons */}
-              {[
-                { Icon: HeartPulse, angle: 0 },
-                { Icon: Stethoscope, angle: 90 },
-                { Icon: Activity, angle: 180 },
-                { Icon: Brain, angle: 270 },
-              ].map(({ Icon, angle }, i) => (
-                <motion.div
-                  key={i}
-                  className="absolute w-14 h-14 rounded-2xl glass-strong flex items-center justify-center shadow-soft"
-                  style={{
-                    left: "50%", top: "50%",
-                    transform: `rotate(${angle}deg) translateY(-200px) rotate(-${angle}deg) translate(-50%, -50%)`,
-                  }}
-                  animate={{ y: [0, -8, 0] }}
-                  transition={{ duration: 3, repeat: Infinity, delay: i * 0.5, ease: "easeInOut" }}
-                >
-                  <Icon className="w-6 h-6 text-primary" />
-                </motion.div>
-              ))}
             </div>
           </motion.div>
         </div>
       </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 1 }}
+        className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 text-center glass-light rounded-full px-6 py-2.5"
+      >
+        <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Academic Year</p>
+        <p className="text-base md:text-lg font-black text-gradient leading-tight">2025 — 2026</p>
+      </motion.div>
 
       {/* Bottom decorative bar */}
       <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
