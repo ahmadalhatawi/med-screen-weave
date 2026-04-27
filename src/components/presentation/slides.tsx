@@ -217,50 +217,57 @@ export function CoverSlide() {
 
 /* ============================ SLIDE 2: INTRODUCTION ============================ */
 export function IntroductionSlide() {
-  const stats = [
-    { Icon: Globe2, value: "100%", label: "تغطية رقمية" },
-    { Icon: Zap, value: "24/7", label: "متاح دائمًا" },
-    { Icon: Shield, value: "Secure", label: "بيانات مشفّرة" },
+  const pillars = [
+    { Icon: Globe2, title: "وصول أسهل", text: "تقليل أثر المسافة والوقت على الحصول على الاستشارة الطبية." },
+    { Icon: Zap, title: "استجابة أسرع", text: "تنظيم التواصل بين المريض والطبيب ضمن تجربة رقمية مباشرة." },
+    { Icon: Shield, title: "خصوصية أعلى", text: "حماية البيانات الطبية وتوثيق رحلة العلاج بشكل آمن." },
   ];
 
   return (
     <div className="relative w-full h-full overflow-hidden noise" style={{ background: "var(--gradient-soft)" }}>
       <Backdrop />
-      <div className="relative z-10 max-w-7xl mx-auto w-full h-full flex flex-col justify-center px-8 md:px-16 py-12">
-        <Tag icon={Sparkles} label="Introduction" />
-        <Title highlight="رقمية شاملة">نحو رعاية صحية</Title>
+      <div className="relative z-10 max-w-7xl mx-auto w-full h-full flex flex-col justify-center px-5 sm:px-8 md:px-16 py-8 md:py-12">
+        <div className="max-w-4xl">
+          <Tag icon={Sparkles} label="Introduction" />
+          <Title highlight="رقمية شاملة">نحو رعاية صحية</Title>
+        </div>
 
-        <div className="grid lg:grid-cols-[1.4fr_1fr] gap-8 mt-6">
+        <div className="grid lg:grid-cols-[1.15fr_0.85fr] gap-5 md:gap-7 mt-5 md:mt-7 items-stretch">
           <motion.div
             variants={fadeUp} initial="hidden" animate="show" custom={2}
-            className="card-3d glass-strong rounded-3xl p-8 md:p-10 relative overflow-hidden"
+            className="card-3d glass-strong rounded-3xl p-6 sm:p-8 md:p-10 relative overflow-hidden flex flex-col justify-between min-h-[330px]"
           >
             <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-glow opacity-50" />
-            <p className="relative text-base md:text-lg leading-[2] text-foreground/90 font-medium">
-              في ظلِّ التطوّرات التكنولوجية المتسارعة التي يشهدها العالم، وخصوصًا في فلسطين،
-              جاءت فكرة المشروع المتمثّلة في تطوير
-              <span className="text-gradient font-bold"> منصّة للرعاية الطبية الافتراضية</span>،
-              تهدف إلى تحسين مستوى الخدمات الصحية من خلال إتاحة الاستشارات عن بُعد،
-              وتعزيز كفاءة التواصل بين مقدّمي الرعاية والمرضى، بما يلبّي احتياجات المجتمع
-              ويواكب متطلّبات التحوّل الرقمي.
-            </p>
+            <div className="relative">
+              <p className="text-sm font-bold text-cyan mb-4" style={{ color: "var(--color-cyan)" }}>سياق المشروع</p>
+              <p className="text-base md:text-xl leading-[2] text-foreground/90 font-medium">
+                في ظل التطور المتسارع للخدمات الرقمية، تظهر الحاجة إلى حلول طبية تقلل الحواجز بين
+                المرضى ومقدمي الرعاية، خصوصًا في المناطق التي يصعب فيها الوصول السريع إلى الخدمات الصحية.
+              </p>
+            </div>
+            <div className="relative mt-7 pt-6 border-t border-white/10">
+              <p className="text-base md:text-lg leading-loose text-muted-foreground">
+                لذلك يقدّم المشروع <span className="text-gradient font-black">منصّة للرعاية الطبية الافتراضية</span> تربط
+                المريض بالطبيب وتدعم الاستشارات عن بُعد ضمن تجربة منظمة وآمنة.
+              </p>
+            </div>
           </motion.div>
 
           <motion.div
             variants={stagger} initial="hidden" animate="show"
-            className="grid gap-4"
+            className="grid gap-3 md:gap-4"
           >
-            {stats.map((s, i) => (
+            {pillars.map((s, i) => (
               <motion.div
-                key={s.label} variants={fadeUp} custom={i + 3}
-                className="card-3d glass rounded-2xl p-5 flex items-center gap-4 group"
+                key={s.title} variants={fadeUp} custom={i + 3}
+                className="card-3d glass rounded-2xl p-5 flex items-start gap-4 group"
               >
-                <div className="w-14 h-14 rounded-2xl bg-gradient-hero flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform">
-                  <s.Icon className="w-7 h-7 text-white" />
+                <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-gradient-hero flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform shrink-0">
+                  <s.Icon className="w-6 h-6 md:w-7 md:h-7 text-white" />
                 </div>
-                <div>
-                  <p className="text-3xl font-black text-gradient leading-none">{s.value}</p>
-                  <p className="text-sm text-muted-foreground mt-1">{s.label}</p>
+                <div className="min-w-0">
+                  <p className="text-lg md:text-xl font-black text-foreground leading-tight">{s.title}</p>
+                  <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{s.text}</p>
                 </div>
                 <ArrowUpRight className="w-5 h-5 text-primary/50 ml-auto group-hover:text-primary group-hover:rotate-45 transition-all" />
               </motion.div>
