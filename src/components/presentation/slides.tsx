@@ -419,119 +419,86 @@ export function MethodologySlide() {
   );
 }
 
-/* ============================ DIAGRAM SLIDE ============================ */
-function DiagramSlide({
-  tag, icon: Icon, title, highlight, intro, image, imageAlt, caption,
-}: {
-  tag: string; icon: any; title: string; highlight: string;
-  intro: string; image: string; imageAlt: string; caption?: string;
-}) {
+/* ============================ SLIDE: USER ROLES ============================ */
+export function UserRolesSlide() {
+  const roles = [
+    {
+      Icon: UserCog,
+      label: "Admin",
+      title: "مدير النظام",
+      desc: "يدير المستخدمين، يعالج الشكاوى، ويُرسل الإعلانات داخل المنصة.",
+      tone: "from-rose-500 to-orange-500",
+    },
+    {
+      Icon: Stethoscope,
+      label: "Doctor",
+      title: "الطبيب",
+      desc: "يستقبل المرضى، يجري الاستشارات المرئية، ويُصدر الوصفات والتحاليل.",
+      tone: "from-sky-500 to-cyan-400",
+    },
+    {
+      Icon: UserIcon,
+      label: "Patient",
+      title: "المريض",
+      desc: "يحجز المواعيد، يحضر الجلسات، ويتلقى نتائج التحاليل والوصفات.",
+      tone: "from-emerald-500 to-teal-400",
+    },
+    {
+      Icon: FlaskConical,
+      label: "Lab",
+      title: "المختبر",
+      desc: "يستقبل طلبات التحاليل من الأطباء ويرفع نتائج الفحوصات.",
+      tone: "from-violet-500 to-fuchsia-500",
+    },
+  ];
+
   return (
     <div className="relative w-full h-full overflow-hidden noise" style={{ background: "var(--gradient-soft)" }}>
       <Backdrop />
-      <div className="relative z-10 max-w-7xl mx-auto w-full h-full flex flex-col px-4 sm:px-8 md:px-12 py-5 md:py-8 overflow-y-auto">
-        <Tag icon={Icon} label={tag} />
-        <motion.h2
-          variants={fadeUp} initial="hidden" animate="show" custom={1}
-          className="text-2xl sm:text-3xl md:text-5xl font-black mt-3 md:mt-4 mb-2 leading-tight tracking-normal"
-        >
-          {title} <span className="text-gradient">{highlight}</span>
-        </motion.h2>
+      <div className="relative z-10 max-w-7xl mx-auto w-full h-full flex flex-col px-4 sm:px-8 md:px-16 py-6 md:py-12 overflow-y-auto">
+        <Tag icon={Users} label="System Users" />
+        <Title highlight="في النظام">أنواع المستخدمين</Title>
+
         <motion.p
           variants={fadeUp} initial="hidden" animate="show" custom={2}
-          className="text-xs sm:text-sm md:text-base text-muted-foreground max-w-4xl leading-relaxed mb-3 md:mb-4"
+          className="text-sm md:text-lg text-muted-foreground max-w-3xl mb-6 md:mb-10 leading-loose"
         >
-          {intro}
+          يضم النظام أربعة أنواع رئيسية من المستخدمين، لكلٍّ منهم دور واضح وصلاحيات تخدم رحلة الرعاية الصحية المتكاملة.
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 30, scale: 0.96 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] as const }}
-          className="flex-1 min-h-[320px] md:min-h-0"
+          variants={stagger} initial="hidden" animate="show"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 flex-1 min-h-0"
         >
-          <div className="relative h-full rounded-3xl glass-strong p-2 sm:p-4 overflow-hidden group">
-            {/* corner accents */}
-            {[
-              "top-3 left-3", "top-3 right-3", "bottom-3 left-3", "bottom-3 right-3"
-            ].map((pos, i) => (
-              <div key={i} className={`absolute ${pos} w-3 h-3 rounded-full bg-gradient-to-br from-primary to-cyan shadow-glow`} />
-            ))}
-            <div className="absolute inset-0 bg-gradient-glow opacity-30 group-hover:opacity-60 transition-opacity duration-700" />
-            {/* Scan line effect */}
+          {roles.map((r, i) => (
             <motion.div
-              className="absolute inset-x-0 h-px pointer-events-none"
-              style={{ background: "linear-gradient(90deg, transparent, var(--color-cyan), transparent)" }}
-              animate={{ y: ["-10%", "110%"] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-            />
-            <div className="relative h-full w-full flex items-center justify-center bg-white/95 rounded-2xl p-2 sm:p-4 md:p-6">
-              <ZoomableImage src={image} alt={imageAlt} />
-            </div>
-          </div>
-        </motion.div>
-
-        {caption && (
-          <motion.p
-            variants={fadeUp} initial="hidden" animate="show" custom={5}
-            className="text-center text-xs md:text-sm text-muted-foreground mt-3 italic"
-          >
-            {caption}
-          </motion.p>
-        )}
-      </div>
-    </div>
-  );
-}
-
-export function UseCaseSlide() {
-  return (
-    <div className="relative w-full h-full overflow-hidden noise" style={{ background: "var(--gradient-soft)" }}>
-      <Backdrop />
-      <div className="relative z-10 max-w-7xl mx-auto w-full h-full grid lg:grid-cols-[0.82fr_1.18fr] gap-4 md:gap-8 px-4 sm:px-8 md:px-12 py-5 md:py-8 overflow-y-auto items-center">
-        <motion.div variants={stagger} initial="hidden" animate="show" className="space-y-4 md:space-y-6">
-          <Tag icon={Users} label="Use Case Diagram" />
-          <motion.h2 variants={fadeUp} custom={1} className="text-3xl sm:text-4xl md:text-6xl font-black leading-tight tracking-normal">
-            مخطط حالات الاستخدام <span className="text-gradient">Use Case</span>
-          </motion.h2>
-          <motion.p variants={fadeUp} custom={2} className="text-sm md:text-lg text-muted-foreground leading-loose">
-            يوضح هذا المخطط كيفية تفاعل المستخدمين مع النظام، حيث يعرض الأدوار المختلفة والوظائف التي يمكن لكل مستخدم تنفيذها داخل المنصة.
-          </motion.p>
-          <motion.div variants={fadeUp} custom={3} className="grid sm:grid-cols-2 gap-3">
-            {["المريض", "الطبيب", "المختبر", "مدير النظام"].map((role) => (
-              <div key={role} className="glass rounded-2xl p-4 flex items-center gap-3">
-                <span className="w-2 h-2 rounded-full bg-primary shadow-glow" />
-                <span className="font-bold text-foreground">{role}</span>
+              key={r.label}
+              variants={fadeUp} custom={i + 3}
+              whileHover={{ y: -10, transition: { duration: 0.3 } }}
+              className="card-3d glass-strong rounded-3xl p-5 md:p-7 flex flex-col relative overflow-hidden group"
+            >
+              <div className={`absolute -top-16 -right-16 w-44 h-44 rounded-full bg-gradient-to-br ${r.tone} opacity-20 group-hover:opacity-40 blur-2xl transition-opacity duration-500`} />
+              <div className="absolute top-4 left-4 text-5xl font-black text-primary/10 group-hover:text-primary/20 transition-colors">
+                0{i + 1}
               </div>
-            ))}
-          </motion.div>
-          <motion.p variants={fadeUp} custom={4} className="text-xs md:text-sm text-muted-foreground italic">
-            الشكل (1): مخطط حالات الاستخدام للنظام
-          </motion.p>
-        </motion.div>
-
-        <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] as const }} className="min-h-[520px] md:min-h-[640px] lg:h-[calc(100vh-150px)] flex items-center justify-center">
-          <ZoomableImage src={useCaseDiagram} alt="Use Case Diagram" className="w-full h-full" />
+              <motion.div
+                className={`relative w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br ${r.tone} flex items-center justify-center mb-4 md:mb-5 shadow-glow`}
+                animate={{ y: [0, -7, 0] }}
+                transition={{ duration: 3 + i * 0.25, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <r.Icon className="w-8 h-8 md:w-10 md:h-10 text-white" />
+              </motion.div>
+              <p className="relative text-[10px] md:text-xs font-black tracking-[0.2em] text-primary mb-1">{r.label}</p>
+              <h3 className="relative text-xl md:text-2xl font-black text-foreground mb-2 md:mb-3 leading-tight">{r.title}</h3>
+              <p className="relative text-sm text-muted-foreground leading-relaxed">{r.desc}</p>
+            </motion.div>
+          ))}
         </motion.div>
       </div>
     </div>
   );
 }
 
-export function ERDSlide() {
-  return (
-    <DiagramSlide
-      tag="Database Schema"
-      icon={Database}
-      title="مخطط قاعدة البيانات"
-      highlight="Database"
-      intro="يمثل هذا المخطط البنية الداخلية لقاعدة البيانات، ويوضح الجداول الرئيسية والعلاقات بينها بطريقة منظمة تسهّل فهم تصميم النظام."
-      image={databaseDiagram}
-      imageAlt="Database Schema Diagram"
-      caption="الشكل (2): مخطط الجداول والعلاقات في قاعدة البيانات"
-    />
-  );
-}
 
 /* ============================ SLIDE 7: INTERFACES ============================ */
 export function InterfacesSlide() {
