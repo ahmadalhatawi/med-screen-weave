@@ -125,7 +125,7 @@ export default function Presentation() {
 
   const Current = SLIDES[index].component;
   const progress = ((index + 1) / SLIDES.length) * 100;
-  const imageFocusedSlide = SLIDES[index].id === "usecase" || SLIDES[index].id === "erd";
+  const imageFocusedSlide = false;
 
   return (
     <div dir="rtl" className="fixed inset-0 bg-background overflow-hidden flex flex-col font-body">
