@@ -3,7 +3,11 @@ import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from
 import { ChevronLeft, ChevronRight, HeartPulse, Menu, X, Maximize2, Grid3x3, Sun, Moon } from "lucide-react";
 import {
   CoverSlide, IntroductionSlide, IdeaSlide, MethodologySlide,
-  UseCaseSlide, ERDSlide, InterfacesSlide,
+  UserRolesSlide, InterfacesSlide,
+  Scenario01, Scenario02, Scenario03, Scenario04, Scenario05, Scenario06,
+  Scenario07, Scenario08, Scenario09, Scenario10, Scenario11, Scenario12,
+  Scenario13, Scenario14, Scenario15, Scenario16, Scenario17, Scenario18,
+  Scenario19, Scenario20, Scenario21, Scenario22,
 } from "./slides";
 
 const SLIDES = [
@@ -11,9 +15,30 @@ const SLIDES = [
   { id: "intro",       title: "مقدّمة المشروع",      component: IntroductionSlide },
   { id: "idea",        title: "فكرة المشروع",        component: IdeaSlide },
   { id: "methodology", title: "التقنيات",            component: MethodologySlide },
-  { id: "usecase",     title: "Use Case",            component: UseCaseSlide },
-  { id: "erd",         title: "Database",            component: ERDSlide },
-  { id: "interfaces",  title: "الواجهات",            component: InterfacesSlide },
+  { id: "users",       title: "المستخدمون",          component: UserRolesSlide },
+  { id: "interfaces",  title: "العرض العملي",        component: InterfacesSlide },
+  { id: "sc01", title: "1. دخول الطبيب",        component: Scenario01 },
+  { id: "sc02", title: "2. إضافة مريض",         component: Scenario02 },
+  { id: "sc03", title: "3. قبول الدعوة",         component: Scenario03 },
+  { id: "sc04", title: "4. منح الصلاحية",        component: Scenario04 },
+  { id: "sc05", title: "5. حجز الموعد",          component: Scenario05 },
+  { id: "sc06", title: "6. تأكيد الحجز",         component: Scenario06 },
+  { id: "sc07", title: "7. الدفع",                component: Scenario07 },
+  { id: "sc08", title: "8. تفعيل الدخول",        component: Scenario08 },
+  { id: "sc09", title: "9. غرفة الفيديو",        component: Scenario09 },
+  { id: "sc10", title: "10. انتهاء الجلسة",      component: Scenario10 },
+  { id: "sc11", title: "11. ملخص الجلسة",        component: Scenario11 },
+  { id: "sc12", title: "12. طلب التحاليل",       component: Scenario12 },
+  { id: "sc13", title: "13. قبول المختبر",       component: Scenario13 },
+  { id: "sc14", title: "14. رفع النتيجة",        component: Scenario14 },
+  { id: "sc15", title: "15. وصول النتيجة",       component: Scenario15 },
+  { id: "sc16", title: "16. الوصفة الطبية",      component: Scenario16 },
+  { id: "sc17", title: "17. عرض الوصفة",         component: Scenario17 },
+  { id: "sc18", title: "18. المحادثة",            component: Scenario18 },
+  { id: "sc19", title: "19. إرسال شكوى",         component: Scenario19 },
+  { id: "sc20", title: "20. معالجة الشكوى",      component: Scenario20 },
+  { id: "sc21", title: "21. الإعلانات",           component: Scenario21 },
+  { id: "sc22", title: "22. تسجيل الخروج",       component: Scenario22 },
 ];
 
 const slideVariants = {
