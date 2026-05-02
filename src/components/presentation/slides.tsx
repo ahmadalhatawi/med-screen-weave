@@ -515,3 +515,357 @@ export function InterfacesSlide() {
     </div>
   );
 }
+
+/* ============================ SCENARIO SLIDE FACTORY ============================ */
+type Step = {
+  Icon: any;
+  title: string;
+  desc?: string;
+  tone?: "action" | "success" | "warning" | "info";
+};
+
+type ScenarioProps = {
+  number: number;
+  total: number;
+  actor: string;
+  actorIcon: any;
+  title: string;
+  highlight: string;
+  steps: Step[];
+  successMessage: string;
+};
+
+const TONE_STYLES: Record<string, { bg: string; ring: string; text: string; chip: string }> = {
+  action:  { bg: "from-sky-500/90 to-blue-500/90",       ring: "ring-sky-400/30",      text: "text-sky-300",     chip: "bg-sky-500/15 text-sky-300 border-sky-400/30" },
+  success: { bg: "from-emerald-500/90 to-teal-500/90",   ring: "ring-emerald-400/30",  text: "text-emerald-300", chip: "bg-emerald-500/15 text-emerald-300 border-emerald-400/30" },
+  warning: { bg: "from-amber-500/90 to-orange-500/90",   ring: "ring-amber-400/30",    text: "text-amber-300",   chip: "bg-amber-500/15 text-amber-300 border-amber-400/30" },
+  info:    { bg: "from-violet-500/90 to-fuchsia-500/90", ring: "ring-violet-400/30",   text: "text-violet-300",  chip: "bg-violet-500/15 text-violet-300 border-violet-400/30" },
+};
+
+function ScenarioSlide({ number, total, actor, actorIcon: ActorIcon, title, highlight, steps, successMessage }: ScenarioProps) {
+  return (
+    <div className="relative w-full h-full overflow-hidden noise" style={{ background: "var(--gradient-soft)" }}>
+      <Backdrop />
+      <div className="relative z-10 max-w-7xl mx-auto w-full h-full flex flex-col px-4 sm:px-8 md:px-16 py-5 md:py-10 overflow-y-auto">
+        {/* Header row */}
+        <div className="flex items-center justify-between gap-4 flex-wrap">
+          <Tag icon={Workflow} label={`Scenario ${String(number).padStart(2, "0")} / ${String(total).padStart(2, "0")}`} />
+          <motion.div
+            initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="inline-flex items-center gap-2 glass-light rounded-full px-4 py-1.5 border border-primary/20"
+          >
+            <ActorIcon className="w-4 h-4 text-primary" />
+            <span className="text-xs font-bold text-foreground">{actor}</span>
+          </motion.div>
+        </div>
+
+        <Title highlight={highlight}>{title}</Title>
+
+        {/* Steps grid */}
+        <motion.div
+          variants={stagger} initial="hidden" animate="show"
+          className={`grid gap-3 md:gap-4 mt-4 md:mt-6 flex-1 min-h-0 ${
+            steps.length <= 2 ? "grid-cols-1 sm:grid-cols-2" :
+            steps.length <= 3 ? "grid-cols-1 sm:grid-cols-3" :
+            steps.length <= 4 ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" :
+            "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+          }`}
+        >
+          {steps.map((s, i) => {
+            const tone = TONE_STYLES[s.tone || "action"];
+            return (
+              <motion.div
+                key={i}
+                variants={fadeUp} custom={i + 2}
+                whileHover={{ y: -6, transition: { duration: 0.3 } }}
+                className="card-3d glass-strong rounded-3xl p-5 md:p-6 relative overflow-hidden group flex flex-col"
+              >
+                <div className={`absolute -top-12 -right-12 w-36 h-36 rounded-full bg-gradient-to-br ${tone.bg} opacity-20 group-hover:opacity-40 blur-2xl transition-opacity duration-500`} />
+                <div className="absolute top-3 left-4 text-4xl font-black text-primary/10 group-hover:text-primary/20 transition-colors">
+                  0{i + 1}
+                </div>
+                <motion.div
+                  className={`relative w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-gradient-to-br ${tone.bg} flex items-center justify-center mb-4 shadow-glow ring-2 ${tone.ring}`}
+                  animate={{ y: [0, -5, 0] }}
+                  transition={{ duration: 3 + i * 0.2, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <s.Icon className="w-6 h-6 md:w-7 md:h-7 text-white" />
+                </motion.div>
+                <h3 className="relative font-black text-base md:text-lg text-foreground mb-1.5 leading-tight">{s.title}</h3>
+                {s.desc && (
+                  <p className="relative text-xs md:text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
+                )}
+              </motion.div>
+            );
+          })}
+        </motion.div>
+
+        {/* Success banner */}
+        <motion.div
+          initial={{ opacity: 0, y: 20, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.7, delay: 0.4 + steps.length * 0.05, ease: [0.22, 1, 0.36, 1] as const }}
+          className="mt-4 md:mt-6 relative overflow-hidden rounded-2xl border border-emerald-400/30 bg-gradient-to-r from-emerald-500/15 via-emerald-500/10 to-transparent backdrop-blur-xl px-5 py-4 flex items-center gap-4"
+        >
+          <motion.div
+            animate={{ scale: [1, 1.15, 1] }}
+            transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+            className="w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center shadow-glow shrink-0"
+          >
+            <CheckCircle className="w-6 h-6 text-white" />
+          </motion.div>
+          <div className="min-w-0">
+            <p className="text-[10px] font-black tracking-[0.2em] text-emerald-400 mb-0.5">SUCCESS STATE</p>
+            <p className="text-sm md:text-base font-bold text-foreground leading-snug">{successMessage}</p>
+          </div>
+        </motion.div>
+      </div>
+    </div>
+  );
+}
+
+/* ============================ 23 SCENARIO SLIDES ============================ */
+export const SCENARIOS_TOTAL = 23;
+
+export function Scenario01() {
+  return <ScenarioSlide number={1} total={SCENARIOS_TOTAL} actor="الطبيب" actorIcon={Stethoscope}
+    title="تسجيل دخول ناجح" highlight="للطبيب"
+    steps={[
+      { Icon: KeyRound, title: "إدخال بيانات الدخول", desc: "البريد الإلكتروني وكلمة المرور.", tone: "action" },
+      { Icon: ShieldCheck, title: "التحقق من الهوية", desc: "التحقق الآمن من الصلاحيات.", tone: "info" },
+      { Icon: LogIn, title: "الدخول إلى لوحة الطبيب", desc: "الوصول الكامل لأدوات العمل.", tone: "success" },
+    ]}
+    successMessage="تم تسجيل دخول الطبيب بنجاح والوصول إلى لوحة التحكم." />;
+}
+
+export function Scenario02() {
+  return <ScenarioSlide number={2} total={SCENARIOS_TOTAL} actor="الطبيب" actorIcon={Stethoscope}
+    title="إضافة مريض" highlight="إلى القائمة"
+    steps={[
+      { Icon: UserPlus, title: "إنشاء بطاقة مريض جديد", desc: "اختيار المريض من قاعدة المستخدمين.", tone: "action" },
+      { Icon: Mail, title: "إرسال دعوة للمريض", desc: "إشعار رسمي عبر التطبيق.", tone: "info" },
+      { Icon: ClipboardList, title: "إضافته للقائمة", desc: "ظهوره ضمن مرضى الطبيب المتابعين.", tone: "success" },
+    ]}
+    successMessage="تمت إضافة المريض إلى قائمة الطبيب وإرسال الدعوة." />;
+}
+
+export function Scenario03() {
+  return <ScenarioSlide number={3} total={SCENARIOS_TOTAL} actor="المريض" actorIcon={UserIcon}
+    title="قبول دعوة" highlight="الطبيب"
+    steps={[
+      { Icon: Mail, title: "استلام إشعار الدعوة", desc: "وصول إشعار من طبيب جديد.", tone: "info" },
+      { Icon: CheckCircle2, title: "مراجعة بيانات الطبيب", desc: "اطلاع المريض على ملف الطبيب.", tone: "action" },
+      { Icon: ShieldCheck, title: "قبول الدعوة", desc: "ربط المريض رسمياً مع الطبيب.", tone: "success" },
+    ]}
+    successMessage="قبل المريض دعوة الطبيب وتم ربط الحسابين." />;
+}
+
+export function Scenario04() {
+  return <ScenarioSlide number={4} total={SCENARIOS_TOTAL} actor="المريض" actorIcon={UserIcon}
+    title="منح صلاحية الوصول" highlight="للملف الطبي"
+    steps={[
+      { Icon: FileHeart, title: "طلب الطبيب الوصول", desc: "إشعار بطلب الاطلاع على الملف.", tone: "info" },
+      { Icon: ShieldCheck, title: "موافقة المريض", desc: "تأكيد منح الصلاحية بشكل صريح.", tone: "action" },
+      { Icon: CheckCircle2, title: "فتح الملف للطبيب", desc: "وصول آمن ومؤرشف للسجل الطبي.", tone: "success" },
+    ]}
+    successMessage="حصل الطبيب على صلاحية الوصول إلى الملف الطبي للمريض." />;
+}
+
+export function Scenario05() {
+  return <ScenarioSlide number={5} total={SCENARIOS_TOTAL} actor="الطبيب" actorIcon={Stethoscope}
+    title="حجز موعد" highlight="للمريض"
+    steps={[
+      { Icon: UserIcon, title: "اختيار المريض", desc: "تحديد المريض من القائمة.", tone: "action" },
+      { Icon: CalendarPlus, title: "تحديد التاريخ والوقت", desc: "اختيار وقت متاح في جدول الطبيب.", tone: "info" },
+      { Icon: Send, title: "إرسال طلب الحجز", desc: "إشعار يصل إلى المريض للموافقة.", tone: "success" },
+    ]}
+    successMessage="تم إنشاء طلب موعد وإرساله إلى المريض." />;
+}
+
+export function Scenario06() {
+  return <ScenarioSlide number={6} total={SCENARIOS_TOTAL} actor="المريض" actorIcon={UserIcon}
+    title="قبول الحجز" highlight="من قبل المريض"
+    steps={[
+      { Icon: CalendarCheck, title: "استلام طلب الموعد", desc: "إشعار بموعد مقترح من الطبيب.", tone: "info" },
+      { Icon: CheckCircle2, title: "مراجعة الموعد", desc: "تأكيد الوقت يناسب المريض.", tone: "action" },
+      { Icon: CheckCircle, title: "قبول الموعد", desc: "تثبيت الحجز في تقويم الطرفين.", tone: "success" },
+    ]}
+    successMessage="تم تأكيد الموعد وحفظه في جدول الطبيب والمريض." />;
+}
+
+export function Scenario07() {
+  return <ScenarioSlide number={7} total={SCENARIOS_TOTAL} actor="المريض" actorIcon={UserIcon}
+    title="الدفع الإلكتروني" highlight="قبل الدخول"
+    steps={[
+      { Icon: AlertTriangle, title: "تنبيه إلزامية الدفع", desc: "لا يمكن دخول الجلسة قبل السداد.", tone: "warning" },
+      { Icon: CreditCard, title: "إتمام عملية الدفع", desc: "بوابة دفع آمنة ومشفّرة.", tone: "action" },
+      { Icon: CheckCircle, title: "تأكيد الدفع", desc: "تفعيل إمكانية الدخول للجلسة.", tone: "success" },
+    ]}
+    successMessage="تم استلام الدفع وأصبحت الجلسة جاهزة للحضور." />;
+}
+
+export function Scenario08() {
+  return <ScenarioSlide number={8} total={SCENARIOS_TOTAL} actor="النظام" actorIcon={Zap}
+    title="تفعيل الدخول قبل الموعد" highlight="بـ 30 دقيقة"
+    steps={[
+      { Icon: Clock, title: "اقتراب وقت الجلسة", desc: "النظام يتابع جدول المواعيد تلقائياً.", tone: "info" },
+      { Icon: Zap, title: "تفعيل زر الانضمام", desc: "يصبح زر الدخول متاحاً للطرفين.", tone: "action" },
+      { Icon: Mail, title: "إرسال إشعار للطرفين", desc: "تذكير الطبيب والمريض بقرب الموعد.", tone: "success" },
+    ]}
+    successMessage="تم تفعيل الدخول إلى الجلسة قبل 30 دقيقة من موعدها." />;
+}
+
+export function Scenario09() {
+  return <ScenarioSlide number={9} total={SCENARIOS_TOTAL} actor="الطبيب والمريض" actorIcon={Video}
+    title="دخول" highlight="غرفة الفيديو"
+    steps={[
+      { Icon: DoorOpen, title: "الانضمام للغرفة", desc: "دخول طرفين بهوية موثّقة.", tone: "action" },
+      { Icon: ShieldCheck, title: "اتصال آمن ومشفّر", desc: "بث فيديو مباشر عبر Agora.", tone: "info" },
+      { Icon: Video, title: "بدء الاستشارة", desc: "تواصل مرئي وصوتي بجودة عالية.", tone: "success" },
+    ]}
+    successMessage="تم دخول غرفة الفيديو وبدء الاستشارة بنجاح." />;
+}
+
+export function Scenario10() {
+  return <ScenarioSlide number={10} total={SCENARIOS_TOTAL} actor="الطبيب" actorIcon={Stethoscope}
+    title="انتهاء" highlight="الجلسة"
+    steps={[
+      { Icon: PhoneOff, title: "إنهاء الاتصال", desc: "إغلاق الغرفة من قبل الطبيب.", tone: "action" },
+      { Icon: Clock, title: "احتساب مدة الجلسة", desc: "تسجيل وقت البدء والانتهاء.", tone: "info" },
+      { Icon: CheckCircle, title: "إغلاق غرفة الفيديو", desc: "تحرير الموارد من الخادم.", tone: "success" },
+    ]}
+    successMessage="تم إنهاء الجلسة وأرشفة بياناتها بنجاح." />;
+}
+
+export function Scenario11() {
+  return <ScenarioSlide number={11} total={SCENARIOS_TOTAL} actor="الطبيب" actorIcon={Stethoscope}
+    title="إدخال" highlight="ملخص الجلسة"
+    steps={[
+      { Icon: ClipboardList, title: "ظهور نافذة الملخص", desc: "تظهر تلقائياً بعد إنهاء الجلسة.", tone: "info" },
+      { Icon: FileText, title: "كتابة الملاحظات الطبية", desc: "تشخيص وملاحظات الطبيب.", tone: "action" },
+      { Icon: CheckCircle, title: "حفظ الملخص بالملف", desc: "إضافته للسجل الطبي للمريض.", tone: "success" },
+    ]}
+    successMessage="تم حفظ ملخص الجلسة في الملف الطبي للمريض." />;
+}
+
+export function Scenario12() {
+  return <ScenarioSlide number={12} total={SCENARIOS_TOTAL} actor="الطبيب" actorIcon={Stethoscope}
+    title="إرسال طلب" highlight="تحاليل طبية"
+    steps={[
+      { Icon: FlaskConical, title: "تحديد التحاليل المطلوبة", desc: "اختيار نوع الفحوصات.", tone: "action" },
+      { Icon: UserIcon, title: "إرسال نسخة للمريض", desc: "وصول الطلب إلى المريض.", tone: "info" },
+      { Icon: Send, title: "إرسال نسخة للمختبر", desc: "وصول الطلب إلى المختبر المختص.", tone: "success" },
+    ]}
+    successMessage="تم إرسال طلب التحاليل إلى المريض والمختبر معاً." />;
+}
+
+export function Scenario13() {
+  return <ScenarioSlide number={13} total={SCENARIOS_TOTAL} actor="المختبر" actorIcon={FlaskConical}
+    title="قبول" highlight="طلب التحاليل"
+    steps={[
+      { Icon: Mail, title: "استلام الطلب", desc: "وصول إشعار بطلب جديد.", tone: "info" },
+      { Icon: ClipboardList, title: "مراجعة تفاصيل الطلب", desc: "نوع التحاليل وبيانات المريض.", tone: "action" },
+      { Icon: CheckCircle, title: "قبول الطلب", desc: "اعتماده وجدولة الفحص.", tone: "success" },
+    ]}
+    successMessage="قبل المختبر طلب التحاليل وتمت جدولته." />;
+}
+
+export function Scenario14() {
+  return <ScenarioSlide number={14} total={SCENARIOS_TOTAL} actor="المختبر" actorIcon={FlaskConical}
+    title="رفع" highlight="نتيجة التحليل"
+    steps={[
+      { Icon: FlaskConical, title: "إجراء الفحص", desc: "تنفيذ التحاليل المطلوبة.", tone: "action" },
+      { Icon: Upload, title: "رفع ملف النتيجة", desc: "إرفاق التقرير الطبي بصيغة PDF.", tone: "info" },
+      { Icon: CheckCircle, title: "اعتماد النتيجة", desc: "ختم النتيجة ونشرها رسمياً.", tone: "success" },
+    ]}
+    successMessage="تم رفع نتيجة التحليل واعتمادها بنجاح." />;
+}
+
+export function Scenario15() {
+  return <ScenarioSlide number={15} total={SCENARIOS_TOTAL} actor="النظام" actorIcon={Zap}
+    title="وصول النتيجة" highlight="للطبيب والمريض"
+    steps={[
+      { Icon: Stethoscope, title: "إشعار الطبيب", desc: "وصول النتيجة فوراً للطبيب.", tone: "info" },
+      { Icon: UserIcon, title: "إشعار المريض", desc: "وصول النتيجة فوراً للمريض.", tone: "info" },
+      { Icon: FileText, title: "ملف بتفاصيل كاملة", desc: "يحتوي تفاصيل الفحص واسم المختبر.", tone: "success" },
+    ]}
+    successMessage="وصلت نتيجة التحليل إلى الطبيب والمريض في نفس اللحظة." />;
+}
+
+export function Scenario16() {
+  return <ScenarioSlide number={16} total={SCENARIOS_TOTAL} actor="الطبيب" actorIcon={Stethoscope}
+    title="إرسال" highlight="وصفة طبية"
+    steps={[
+      { Icon: Pill, title: "كتابة الوصفة", desc: "تحديد الأدوية والجرعات.", tone: "action" },
+      { Icon: FileText, title: "حفظها ضمن الملف", desc: "ربطها بسجل المريض.", tone: "info" },
+      { Icon: Send, title: "إرسالها للمريض", desc: "وصول الوصفة فور إصدارها.", tone: "success" },
+    ]}
+    successMessage="تم إصدار الوصفة الطبية وإرسالها إلى المريض." />;
+}
+
+export function Scenario17() {
+  return <ScenarioSlide number={17} total={SCENARIOS_TOTAL} actor="المريض" actorIcon={UserIcon}
+    title="عرض" highlight="الوصفة الطبية"
+    steps={[
+      { Icon: Mail, title: "استلام الوصفة", desc: "إشعار بوصول وصفة جديدة.", tone: "info" },
+      { Icon: FileText, title: "فتح ملف الوصفة", desc: "عرض تفاصيل الأدوية كاملة.", tone: "action" },
+      { Icon: QrCode, title: "عرض QR Code", desc: "كود يُقرأ مباشرة من الصيدلية.", tone: "success" },
+    ]}
+    successMessage="يمكن للمريض عرض الوصفة كملف أو QR Code للصيدلية." />;
+}
+
+export function Scenario18() {
+  return <ScenarioSlide number={18} total={SCENARIOS_TOTAL} actor="الطبيب والمريض" actorIcon={MessageSquare}
+    title="التواصل" highlight="عبر المحادثة"
+    steps={[
+      { Icon: MessageSquare, title: "فتح نافذة المحادثة", desc: "بدء حوار نصي مباشر.", tone: "action" },
+      { Icon: Send, title: "تبادل الرسائل", desc: "متابعة بين الجلسات بسرعة.", tone: "info" },
+      { Icon: ShieldCheck, title: "حفظ سجل المحادثة", desc: "أرشفة آمنة لكل المحادثات.", tone: "success" },
+    ]}
+    successMessage="تم التواصل بين الطبيب والمريض وحفظ المحادثة بشكل آمن." />;
+}
+
+export function Scenario19() {
+  return <ScenarioSlide number={19} total={SCENARIOS_TOTAL} actor="المستخدم" actorIcon={UserIcon}
+    title="إرسال شكوى" highlight="لمدير النظام"
+    steps={[
+      { Icon: AlertTriangle, title: "فتح نموذج الشكوى", desc: "اختيار نوع المشكلة.", tone: "warning" },
+      { Icon: FileText, title: "كتابة تفاصيل الشكوى", desc: "وصف المشكلة بشكل واضح.", tone: "action" },
+      { Icon: Send, title: "إرسالها للمدير", desc: "وصول الشكوى للوحة المدير.", tone: "success" },
+    ]}
+    successMessage="تم إرسال الشكوى إلى مدير النظام بنجاح." />;
+}
+
+export function Scenario20() {
+  return <ScenarioSlide number={20} total={SCENARIOS_TOTAL} actor="مدير النظام" actorIcon={UserCog}
+    title="معالجة" highlight="الشكوى"
+    steps={[
+      { Icon: ClipboardList, title: "مراجعة الشكوى", desc: "الاطلاع على تفاصيل المشكلة.", tone: "info" },
+      { Icon: CheckCircle, title: "قبول الشكوى", desc: "اتخاذ إجراء فوري عليها.", tone: "success" },
+      { Icon: AlertTriangle, title: "رفض أو تجاهل", desc: "في حال عدم استيفاء الشروط.", tone: "warning" },
+    ]}
+    successMessage="تمت معالجة الشكوى وتحديث حالتها داخل النظام." />;
+}
+
+export function Scenario21() {
+  return <ScenarioSlide number={21} total={SCENARIOS_TOTAL} actor="مدير النظام" actorIcon={UserCog}
+    title="إرسال" highlight="إعلان"
+    steps={[
+      { Icon: Megaphone, title: "كتابة الإعلان", desc: "صياغة محتوى الإعلان.", tone: "action" },
+      { Icon: Users, title: "اختيار المستهدفين", desc: "كل المستخدمين أو فئة محددة.", tone: "info" },
+      { Icon: Send, title: "نشر الإعلان", desc: "وصوله فوراً عبر إشعار.", tone: "success" },
+    ]}
+    successMessage="تم نشر الإعلان ووصوله إلى الفئة المستهدفة." />;
+}
+
+export function Scenario22() {
+  return <ScenarioSlide number={22} total={SCENARIOS_TOTAL} actor="جميع المستخدمين" actorIcon={UserIcon}
+    title="تسجيل خروج" highlight="ناجح"
+    steps={[
+      { Icon: LogOut, title: "اختيار تسجيل الخروج", desc: "النقر على زر الخروج.", tone: "action" },
+      { Icon: ShieldCheck, title: "إنهاء الجلسة بأمان", desc: "إلغاء صلاحيات الجلسة.", tone: "info" },
+      { Icon: CheckCircle, title: "العودة لشاشة الدخول", desc: "إغلاق كامل للحساب.", tone: "success" },
+    ]}
+    successMessage="تم تسجيل الخروج بنجاح وإنهاء الجلسة بشكل آمن." />;
+}
