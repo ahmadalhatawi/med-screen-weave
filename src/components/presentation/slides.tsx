@@ -4,15 +4,18 @@ import {
   Users, Database, LayoutGrid, Code2, Workflow,
   MapPin, FileHeart, Sparkles, ArrowUpRight,
   Zap, Shield, Globe2,
+  UserCog, Stethoscope, User as UserIcon, FlaskConical,
+  LogIn, UserPlus, Mail, KeyRound, CalendarPlus, CalendarCheck,
+  CreditCard, Clock, DoorOpen, PhoneOff, ClipboardList,
+  Send, CheckCircle2, Upload, FileText, Pill, QrCode,
+  MessageSquare, AlertTriangle, ShieldCheck, Megaphone, LogOut,
+  CheckCircle,
 } from "lucide-react";
 import hebronLogo from "@/assets/hebron-university-logo.png";
 import teleLogo from "@/assets/telemedicine-logo.png";
 import reactIcon from "@/assets/react-icon.png";
 import firebaseIcon from "@/assets/firebase-icon.png";
-import useCaseDiagram from "@/assets/usecase-diagram.png";
-import databaseDiagram from "@/assets/database-diagram.png";
 import Backdrop from "./Backdrop";
-import ZoomableImage from "./ZoomableImage";
 
 /* =============== shared atoms =============== */
 const fadeUp = {
